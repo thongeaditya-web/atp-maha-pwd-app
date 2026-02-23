@@ -432,6 +432,15 @@ tr:hover td{background:#fdf8f3}
 
 </style>
 
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  <script>
+    try {
+      var FBCFG={apiKey:"AIzaSyCdH-k3hH1mYYcND0cBf7J2pLRG6xQydrU",authDomain:"atp-maha-pwd.firebaseapp.com",projectId:"atp-maha-pwd",storageBucket:"atp-maha-pwd.firebasestorage.app",messagingSenderId:"382409286731",appId:"1:382409286731:web:37daae9842bc3687bf99ce"};
+      if(!firebase.apps.length) firebase.initializeApp(FBCFG);
+    } catch(e) { console.error('Firebase init error:', e); }
+  </script>
 </head>
 <body>
 <div id="loginShell">
@@ -2601,17 +2610,7 @@ function showToast(msg,type){
 function showE(id,msg){var e=G(id);if(e){e.textContent=msg;e.style.display="block";}}
 function hideE(id){var e=G(id);if(e)e.style.display="none";}
 
-function loadFB(cb){
-  if(FB_RDY&&window.firebase){cb();return;}
-  var srcs=["https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js","https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js","https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"];
-  var done=0;
-  srcs.forEach(function(src){
-    var s=document.createElement("script");s.src=src;
-    s.onload=function(){if(++done===srcs.length){try{if(!firebase.apps.length)firebase.initializeApp(FBCFG);}catch(e){}FB_RDY=true;cb();}};
-    s.onerror=function(){if(++done===srcs.length)cb();};
-    document.head.appendChild(s);
-  });
-}
+function loadFB(cb){ cb(); }
 
 function loadQR(cb){
   if(window.QRCode){cb();return;}
@@ -2632,14 +2631,15 @@ function makeQR(){
 document.addEventListener("DOMContentLoaded",function(){
   if(G("loginShell"))G("loginShell").style.display="flex";
   if(G("appShell"))G("appShell").style.display="none";
-  loadFB(function(){
-    if(!window.firebase||!firebase.auth){showToast("Firebase load failed","error");return;}
-    firebase.auth().onAuthStateChanged(function(user){
-      if(user){CU=user;loadUserDoc();if(G("loginShell"))G("loginShell").style.display="none";if(G("appShell"))G("appShell").style.display="block";}
-      else{CU=null;if(G("loginShell"))G("loginShell").style.display="flex";if(G("appShell"))G("appShell").style.display="none";}
-    });
-    loadAppCfg();loadAdminQR();
+  if(!window.firebase||!firebase.auth){
+    showToast("Firebase not available — check internet","error");
+    return;
+  }
+  firebase.auth().onAuthStateChanged(function(user){
+    if(user){CU=user;loadUserDoc();if(G("loginShell"))G("loginShell").style.display="none";if(G("appShell"))G("appShell").style.display="block";}
+    else{CU=null;if(G("loginShell"))G("loginShell").style.display="flex";if(G("appShell"))G("appShell").style.display="none";}
   });
+  loadAppCfg();loadAdminQR();
   loadQR(makeQR);
 });
 
@@ -2688,7 +2688,7 @@ function sendOTP(){
   var btn=G("otpBtn");btn.disabled=true;btn.textContent="Sending...";
   if(G("phSent"))G("phSent").textContent="+91"+num;
   G("rcWrap").innerHTML="";
-  if(!window.firebase||!firebase.auth){showE("phErr","Firebase not ready");btn.disabled=false;btn.textContent="📤 Send OTP";return;}
+  
   try{
     var rc=new firebase.auth.RecaptchaVerifier("rcWrap",{size:"invisible",callback:function(){}});
     firebase.auth().signInWithPhoneNumber("+91"+num,rc)
@@ -2737,7 +2737,7 @@ function startOTPTimer(){
 }
 
 function doGoogle(){
-  if(!window.firebase||!firebase.auth){showToast("Firebase not ready","error");return;}
+  
   firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(function(e){showToast("Google login failed: "+e.message,"error");});
 }
 
@@ -2767,7 +2767,7 @@ function doLogout(){if(!confirm("Log out?"))return;firebase.auth().signOut();}
 function doAdminLogin(){
   var pw=(G("admPwd").value||"").trim();if(!pw){showE("admErr","Enter password");return;}
   hideE("admErr");var btn=G("admBtn");btn.disabled=true;btn.textContent="Logging in...";
-  if(!window.firebase||!firebase.auth){showE("admErr","Firebase not ready");btn.disabled=false;btn.textContent="🔑 Admin Login";return;}
+  
   firebase.auth().signInWithEmailAndPassword(ADMIN_EMAIL,pw)
     .then(function(){
       if(G("loginShell"))G("loginShell").style.display="none";
@@ -2775,7 +2775,7 @@ function doAdminLogin(){
       if(G("adminLoginBox"))G("adminLoginBox").style.display="none";
       if(G("adminDash"))G("adminDash").style.display="block";
       if(G("adminUsr"))G("adminUsr").textContent=ADMIN_EMAIL;
-      loadFB(function(){aLoadAll();aLoadCurQR();aStartPayListener();aLoadSettings();});
+      aLoadAll();aLoadCurQR();aStartPayListener();aLoadSettings();
     })
     .catch(function(e){btn.disabled=false;btn.textContent="🔑 Admin Login";showE("admErr",e.code==="auth/wrong-password"||e.code==="auth/invalid-credential"?"Wrong password":"Error: "+e.message);});
 }
@@ -2795,7 +2795,7 @@ function doPortalLogin(){
 
 function openAdmin(){
   var w=G("adminWrap");if(!w)return;w.style.display="block";
-  if(CU&&CU.email===ADMIN_EMAIL){if(G("adminLoginBox"))G("adminLoginBox").style.display="none";if(G("adminDash"))G("adminDash").style.display="block";if(G("adminUsr"))G("adminUsr").textContent=CU.email;loadFB(function(){aLoadAll();aLoadCurQR();aStartPayListener();aLoadSettings();});}
+  if(CU&&CU.email===ADMIN_EMAIL){if(G("adminLoginBox"))G("adminLoginBox").style.display="none";if(G("adminDash"))G("adminDash").style.display="block";if(G("adminUsr"))G("adminUsr").textContent=CU.email;aLoadAll();aLoadCurQR();aStartPayListener();aLoadSettings();}
   else{if(G("adminLoginBox"))G("adminLoginBox").style.display="flex";if(G("adminDash"))G("adminDash").style.display="none";}
 }
 
