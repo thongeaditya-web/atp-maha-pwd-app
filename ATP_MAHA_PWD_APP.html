@@ -448,42 +448,11 @@ tr:hover td{background:#fdf8f3}
 <div class="alogo"><span class="ico">🏛️</span><h1>ATP's MAHA PWD ESTIMATE APP</h1><p>Maharashtra PWD · SSR 2022-23</p></div>
 <div class="acard">
 <div class="atabs">
-<div class="atab on" id="at0" onclick="swAuth(0)">📱 Phone OTP</div>
-<div class="atab" id="at1" onclick="swAuth(1)">✉️ Email</div>
-<div class="atab" id="at2" onclick="swAuth(2)">⚙️ Admin</div>
+<div class="atab on" id="at0" onclick="swAuth(0)">✉️ Email</div>
+<div class="atab" id="at1" onclick="swAuth(1)">⚙️ Admin</div>
 </div>
 <!-- PHONE -->
 <div class="apanel on" id="ap0">
-<div id="ph1">
-<div class="nr">
-<div class="laf"><label>First Name *</label><input id="phFirst" type="text" placeholder="First Name" autocomplete="given-name"></div>
-<div class="laf"><label>Surname</label><input id="phLast" type="text" placeholder="Surname" autocomplete="family-name"></div>
-</div>
-<div class="laf"><label>Mobile Number *</label>
-<div class="phr"><span class="phpre">🇮🇳 +91</span>
-<input id="phNum" type="tel" maxlength="10" placeholder="10-digit number" style="flex:1" autocomplete="tel" oninput="this.value=this.value.replace(/[^0-9]/g,'')" onkeydown="if(event.key==='Enter')sendOTP()">
-</div></div>
-<div class="lerr" id="phErr"></div>
-<button class="lbtn" id="otpBtn" onclick="sendOTP()">📤 Send OTP</button>
-<div id="rcWrap" style="margin-top:.5rem"></div>
-</div>
-<div id="ph2" style="display:none">
-<p style="font-size:.72rem;color:#888;text-align:center;margin-bottom:.8rem">OTP sent to: <strong id="phSent" style="color:#f5a623"></strong></p>
-<div class="laf"><label>Enter 6-digit OTP</label>
-<input class="otpbox" id="otpVal" type="tel" maxlength="6" placeholder="● ● ● ● ● ●" oninput="this.value=this.value.replace(/[^0-9]/g,'')" onkeydown="if(event.key==='Enter')verifyOTP()">
-</div>
-<div class="otimer">Resend in <span class="hl" id="otpCd">60</span>s
-<span id="resendSpan" style="display:none;color:#f5a623;cursor:pointer;margin-left:.4rem" onclick="goPhBack()">← Resend</span></div>
-<div class="lerr" id="otpErr"></div>
-<button class="lbtn" id="verBtn" onclick="verifyOTP()" style="margin-top:.6rem">✅ Verify OTP</button>
-<button class="lbtn ghost" onclick="goPhBack()" style="margin-top:.35rem">← Change Number</button>
-</div>
-<div class="lsep">OR</div>
-<button class="lgoog" onclick="doGoogle()">🌐 Continue with Google</button>
-<div class="afoot">First <span id="freeLimitTxt">5</span> free · then ₹<span id="priceTxt">5</span>/download</div>
-</div>
-<!-- EMAIL -->
-<div class="apanel" id="ap1">
 <div class="atabs" style="background:#0d0d0d;border-radius:6px;margin-bottom:.8rem">
 <div class="atab on" id="et0" onclick="swEmail('l')" style="font-size:.63rem">Login</div>
 <div class="atab" id="et1" onclick="swEmail('r')" style="font-size:.63rem">Register</div>
@@ -510,7 +479,7 @@ tr:hover td{background:#fdf8f3}
 <button class="lgoog" onclick="doGoogle()">🌐 Continue with Google</button>
 </div>
 <!-- ADMIN -->
-<div class="apanel" id="ap2">
+<div class="apanel" id="ap1">
 <p style="font-size:.72rem;color:#aaa;text-align:center;margin-bottom:.8rem">Admin: thongeaditya@gmail.com</p>
 <div class="laf"><label>Email (fixed)</label><input type="email" value="thongeaditya@gmail.com" readonly></div>
 <div class="laf"><label>Password</label><input id="admPwd" type="password" placeholder="Admin password" onkeydown="if(event.key==='Enter')doAdminLogin()"></div>
@@ -2674,7 +2643,7 @@ function renderHeader(){
   el.innerHTML="<span class=\"uname\">👤 "+esc(nm)+"</span>"+(IS_PRO?"<span class=\"ubadge upro\">💎 Pro</span>":"<span class=\"ubadge ufree\">🆓 "+rem+" left</span>")+"<button class=\"ubtn\" onclick=\"doLogout()\">Logout</button>";
 }
 
-function swAuth(i){for(var j=0;j<3;j++){var p=G("ap"+j),t=G("at"+j);if(p)p.classList[j===i?"add":"remove"]("on");if(t)t.classList[j===i?"add":"remove"]("on");}}
+function swAuth(i){for(var j=0;j<2;j++){var p=G("ap"+j),t=G("at"+j);if(p)p.classList[j===i?"add":"remove"]("on");if(t)t.classList[j===i?"add":"remove"]("on");}}
 function swEmail(tab){G("eL").style.display=tab==="l"?"block":"none";G("eR").style.display=tab==="r"?"block":"none";G("et0").classList[tab==="l"?"add":"remove"]("on");G("et1").classList[tab==="r"?"add":"remove"]("on");}
 
 function showInfo(title,inp,out){G("infoTtl").textContent=title+" — Guide";G("infoIn").textContent=inp;G("infoOut").textContent=out;G("infoModal").style.display="flex";}
