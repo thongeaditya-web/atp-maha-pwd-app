@@ -3483,11 +3483,11 @@ function loadCloudList(){
         var d = doc.data();
         var dt = d.updatedAt ? new Date(d.updatedAt.seconds*1000).toLocaleDateString('en-IN') : '--';
         var gr = d.grand ? '₹' + fmt(d.grand) : '';
-        h += '<div class="citem" onclick="loadEst('' + doc.id + '')">'
+        h += '<div class="citem" onclick="loadEst(\'' + doc.id + '\')">'
           + '<div class="cname">' + esc(d.name||'Untitled') + '</div>'
           + '<div class="cmeta">' + dt + (gr?' · '+gr:'') + '</div>'
-          + '<button class="cdl" onclick="event.stopPropagation();dlEst('' + doc.id + '')" title="Download">⬇️</button>'
-          + '<button class="cdel" onclick="event.stopPropagation();delEst('' + doc.id + '')">🗑️</button>'
+          + '<button class="cdl" onclick="event.stopPropagation();dlEst(\'' + doc.id + '\')" title="Download">⬇️</button>'
+          + '<button class="cdel" onclick="event.stopPropagation();delEst(\'' + doc.id + '\')" >🗑️</button>'
           + '</div>';
       });
       list.innerHTML = h;
@@ -3672,9 +3672,9 @@ function aRenderPays(pays){
       +'<td style="font-size:.67rem;color:#888">'+adminDt(p.createdAt)+'</td>'
       +'<td style="display:flex;gap:.3rem;flex-wrap:wrap;padding:.38rem .8rem">'
         +(p.status==='pending'?
-          '<button class="xbtn xgr" onclick="aVerify(''+p._id+'',''+esc(p.uid||'')+'')">✅ Verify</button>'
-          +'<button class="xbtn xrd" onclick="aReject(''+p._id+'')">❌ Reject</button>':'')
-        +'<button class="xbtn xbl" onclick="aViewPay(''+p._id+'')">👁️ View</button>'
+          '<button class="xbtn xgr" onclick="aVerify(\'' + p._id + '\',\'' + esc(p.uid||'') + '\')">✅ Verify</button>'
+          +'<button class="xbtn xrd" onclick="aReject(\'' + p._id + '\')">❌ Reject</button>':'')
+        +'<button class="xbtn xbl" onclick="aViewPay(\'' + p._id + '\')">👁️ View</button>'
       +'</td></tr>';
   });
   G('payTbody').innerHTML = h;
@@ -3724,15 +3724,15 @@ function aViewPay(payId){
     +pr('⏰ Auto-approve',p.autoApproveAt?new Date(p.autoApproveAt).toLocaleTimeString('en-IN'):'—');
   if(p.screenshotURL){
     h+='<div style="margin:.7rem 0"><div style="font-size:.65rem;font-weight:800;color:#888;margin-bottom:.3rem;text-transform:uppercase">Screenshot:</div>';
-    h+='<img src="'+esc(p.screenshotURL)+'" class="pdss" alt="screenshot" onerror="this.style.display='none'">';
+    h+='<img src="'+esc(p.screenshotURL)+'" class="pdss" alt="screenshot" onerror="this.style.display=\'none\'">';
     h+='</div>';
   } else {
     h+='<div style="background:#f8f6f2;border-radius:6px;padding:.8rem;text-align:center;color:#aaa;font-size:.72rem;margin:.7rem 0">Screenshot upload नाही</div>';
   }
   if(p.status==='pending'){
     h+='<div class="actrow">'
-      +'<button class="xbtn xgr" onclick="aVerify(''+payId+'',''+esc(p.uid||'')+'');closePD()" style="flex:1;padding:.55rem">✅ Verify</button>'
-      +'<button class="xbtn xrd" onclick="aReject(''+payId+'');closePD()" style="flex:1;padding:.55rem">❌ Reject</button>'
+      +'<button class="xbtn xgr" onclick="aVerify(\'' + payId + '\',\'' + esc(p.uid||'') + '\');closePD()" style="flex:1;padding:.55rem">✅ Verify</button>'
+      +'<button class="xbtn xrd" onclick="aReject(\'' + payId + '\');closePD()" style="flex:1;padding:.55rem">❌ Reject</button>'
       +'</div>';
   }
   G('pdBody').innerHTML = h;
@@ -3752,7 +3752,7 @@ function aRenderUsers(users){
       +'<td style="text-align:center;font-weight:700">'+(u.dlCount||0)+'</td>'
       +'<td>'+badge+'</td>'
       +'<td style="font-size:.65rem;color:#888">'+adminDt(u.createdAt)+'</td>'
-      +'<td><button class="xbtn xgr" onclick="aGrant(''+u._id+'',''+esc(u.name||u.phone||'')+'')">🎁 Grant Pro</button></td>'
+      +'<td><button class="xbtn xgr" onclick="aGrant(\'' + u._id + '\',\'' + esc(u.name||u.phone||'') + '\')">🎁 Grant Pro</button></td>'
       +'</tr>';
   });
   G('usrTbody').innerHTML=h;
