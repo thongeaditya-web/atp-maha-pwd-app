@@ -192,7 +192,7 @@ tr:hover td{background:#fdf8f3}
 @media print{
   nav,.tabs,.sw,.rh,.rb,.af,.fa,.bar,.dbt,.side,
   .km-in,.lead-note,.cta,.btn,button,.sh,
-  #p2,#p9,#p10{display:none!important}
+  #p2,#p9,#p10,#p12{display:none!important}
   .cov-lbl{display:none!important}
   .cov-row{border:none!important;padding:.12rem 0!important}
   .cov-val input{border:none!important;padding:0!important;font-size:.8rem!important;font-weight:700!important;pointer-events:none;text-align:center!important;background:transparent!important}
@@ -545,8 +545,7 @@ tr:hover td{background:#fdf8f3}
             background:#0d0d0d; border-radius:6px; padding:.4rem; }
 
 /* ── SECRET BTN ── */
-#secretBtn { position:fixed; bottom:0; right:0; width:30px; height:30px;
-             background:transparent; border:none; cursor:pointer; z-index:8999; opacity:0; }
+/* secret admin btn removed */
 
 @media(max-width:600px) {
   .astats { grid-template-columns:repeat(2,1fr); }
@@ -667,43 +666,20 @@ tr:hover td{background:#fdf8f3}
    <!-- ── ADMIN TAB ── -->
    <div class="apanel" id="ap2">
     <p style="font-size:.72rem;color:#aaa;text-align:center;margin-bottom:.8rem;line-height:1.6">
-     Admin access via OTP only.<br>
-     <strong style="color:#f5a623">+91 8975962565</strong>
+     Admin access — Email &amp; Password
     </p>
-    <div id="adm1">
-     <div class="af">
-      <label>Admin Mobile</label>
-      <div class="ph-row">
-       <span class="ph-pre">🇮🇳 +91</span>
-       <input id="admNum" type="tel" maxlength="10" value="8975962565"
-        style="flex:1;background:#0d0d0d;color:#f5a623;font-weight:700"
-        oninput="this.value=this.value.replace(/[^0-9]/g,'')" readonly>
-      </div>
-     </div>
-     <div class="aerr" id="admPhErr"></div>
-     <button class="abtn blue" id="admOtpBtn" onclick="sendAdminOTP()">📤 Send Admin OTP</button>
-     <div id="admRcDiv" style="margin-top:.5rem"></div>
+    <div class="af">
+     <label>Admin Email</label>
+     <input id="admEmailDisp" type="email" value="thongeaditya@gmail.com"
+      style="background:#0d0d0d;color:#f5a623;font-weight:700" readonly>
     </div>
-    <div id="adm2" style="display:none">
-     <p style="font-size:.72rem;color:#888;text-align:center;margin-bottom:.8rem">
-      OTP sent to <strong style="color:#f5a623">+91 8975962565</strong>
-     </p>
-     <div class="af">
-      <label>Enter 6-digit OTP</label>
-      <input class="otp-box" id="admOtp" type="tel" maxlength="6"
-       placeholder="● ● ● ● ● ●"
-       oninput="this.value=this.value.replace(/[^0-9]/g,'')"
-       onkeydown="if(event.key==='Enter')verifyAdminOTP()">
-     </div>
-     <div class="otimer">
-      Resend in <span class="hl" id="admCd">60</span>s
-      <span id="admResend" style="display:none;color:#f5a623;cursor:pointer;margin-left:.4rem"
-       onclick="sendAdminOTP()">Resend</span>
-     </div>
-     <div class="aerr" id="admOtpErr"></div>
-     <button class="abtn blue" onclick="verifyAdminOTP()" style="margin-top:.6rem">✅ Verify & Open Admin</button>
-     <button class="abtn ghost" onclick="goAdmBack()" style="margin-top:.35rem">← Back</button>
+    <div class="af">
+     <label>Admin Password</label>
+     <input id="admPwd" type="password" placeholder="Enter admin password"
+      onkeydown="if(event.key==='Enter')sendAdminOTP()">
     </div>
+    <div class="aerr" id="admPhErr"></div>
+    <button class="abtn blue" id="admOtpBtn" onclick="sendAdminOTP()">🔑 Admin Login</button>
    </div>
 
   </div><!-- /acard -->
@@ -821,7 +797,7 @@ tr:hover td{background:#fdf8f3}
 <div class="toast" id="mainToast"></div>
 
 <!-- ════ SECRET ADMIN BTN ════ -->
-<button id="secretBtn" onclick="openAdmin()" title=""></button>
+
 
 
 <!-- ════ ADMIN PORTAL ════ -->
@@ -832,15 +808,25 @@ tr:hover td{background:#fdf8f3}
   <div class="alwrap">
    <div class="allogo"><span class="ico">🔐</span><h1>Admin Portal</h1></div>
    <div class="alcard">
-    <p>Login via OTP sent to +91 8975962565</p>
+    <p>Admin: thongeaditya@gmail.com</p>
     <div id="admLogin1">
+     <div class="af" style="margin-top:.4rem">
+      <label style="color:#666">Admin Email</label>
+      <input type="email" value="thongeaditya@gmail.com"
+       style="background:#111;color:#f5a623;font-weight:700;border:1px solid #2a2a2a;width:100%;padding:.5rem .7rem;border-radius:6px" readonly>
+     </div>
+     <div class="af">
+      <label style="color:#666">Password</label>
+      <input id="admLPwd" type="password" placeholder="Enter admin password"
+       style="background:#111;color:#fff;border:1px solid #2a2a2a;width:100%;padding:.5rem .7rem;border-radius:6px;outline:none"
+       onkeydown="if(event.key==='Enter')sendAdminOTPFromPortal()">
+     </div>
      <div class="aerr" id="admLErr"></div>
-     <button class="abtn blue" id="admLBtn" onclick="sendAdminOTPFromPortal()">📤 Send OTP to Admin Phone</button>
-     <div id="admLRcDiv" style="margin-top:.5rem"></div>
+     <button class="abtn blue" id="admLBtn" onclick="sendAdminOTPFromPortal()">🔑 Login to Dashboard</button>
     </div>
     <div id="admLogin2" style="display:none">
      <div class="af" style="margin-top:.6rem">
-      <label>Enter 6-digit OTP</label>
+      <label>UNUSED</label>
       <input class="otp-box" id="admLOtp" type="tel" maxlength="6"
        placeholder="● ● ● ● ● ●"
        oninput="this.value=this.value.replace(/[^0-9]/g,'')"
@@ -2108,30 +2094,57 @@ function goTab(n){
   var at=R('t'+n);if(at)at.scrollIntoView({inline:'center',behavior:'smooth',block:'nearest'});
 }
 function printAll(){
+  /* ── Check download permission ── */
+  if(typeof canDownload==='function' && !canDownload()) return;
+
   upMeta();
   var nm=((R('pName')||{}).value||'');
   document.querySelectorAll('.pth-work').forEach(function(el){el.textContent=nm;});
   /* Save which tab is currently active */
   var activeTab=0;
   for(var i=0;i<=12;i++){var t=R('t'+i);if(t&&t.classList.contains('on')){activeTab=i;break;}}
-  /* Show all panels for print */
+
+  /* Show all panels for print EXCEPT p12 (Lead Diagram - excluded via CSS) */
   document.querySelectorAll('.panel').forEach(function(p){
+    if(p.id==='p12') return; /* Lead diagram - skip */
     p.classList.add('on');
     p.style.pageBreakAfter='always';
   });
-  /* Draw Lead Diagram before print */
-  if(typeof drawLeadDiagram==='function')drawLeadDiagram();
-  /* Small delay to ensure diagram renders */
+
+  /* Skip items with lead qty = 0 during print */
+  document.querySelectorAll('tr.item-row').forEach(function(row){
+    var qty=parseFloat(row.getAttribute('data-qty')||0);
+    var lead=parseFloat(row.getAttribute('data-lead')||0);
+    if(qty===0 || lead===0){
+      row.setAttribute('data-hidden-print','1');
+      row.style.display='none';
+    }
+  });
+
   setTimeout(function(){
     window.print();
-  },100);
+  },150);
   /* After print: remove inline styles and restore active tab */
   setTimeout(function(){
     document.querySelectorAll('.panel').forEach(function(p){
       p.classList.remove('on');
       p.style.pageBreakAfter='';
     });
+    /* Restore hidden zero-lead rows */
+    document.querySelectorAll('[data-hidden-print]').forEach(function(row){
+      row.removeAttribute('data-hidden-print');
+      row.style.display='';
+    });
     document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on');});
+    /* Decrement download count */
+    if(typeof DL_COUNT!=='undefined' && typeof IS_PRO!=='undefined' && !IS_PRO){
+      DL_COUNT++;
+      if(typeof renderHeader==='function') renderHeader();
+      if(typeof CU!=='undefined' && CU && window.firebase && firebase.firestore){
+        firebase.firestore().collection('users').doc(CU.uid)
+          .update({dlCount: firebase.firestore.FieldValue.increment(1)});
+      }
+    }
     /* Restore active tab properly */
     goTab(activeTab);
   },500);
@@ -3012,7 +3025,8 @@ var FB_CFG = {
   messagingSenderId: "382409286731",
   appId:             "1:382409286731:web:37daae9842bc3687bf99ce"
 };
-var ADMIN_PHONE  = "+918975962565";
+var ADMIN_PHONE  = "+918975962565"; /* kept for reference */
+var ADMIN_EMAIL_ID = "thongeaditya@gmail.com";
 var UPI_ID       = "adityathonge@ybl";
 var UPI_NAME     = "ATP MAHA PWD";
 var CLDN_URL     = "https://api.cloudinary.com/v1_1/duef21oux/image/upload";
@@ -3304,50 +3318,26 @@ function goPhBack(){
 
 /* ── ADMIN OTP (from login tab) ── */
 function sendAdminOTP(){
+  /* Admin login via Email+Password */
+  var pw=(G('admPwd').value||'').trim();
+  if(!pw){ showErr('admPhErr','Enter admin password'); return; }
   hideErr('admPhErr');
-  var btn=G('admOtpBtn'); btn.disabled=true; btn.textContent='Sending...';
-  G('admRcDiv').innerHTML='';
-  try{
-    var rc=new firebase.auth.RecaptchaVerifier('admRcDiv',{
-      size:'invisible', callback:function(){}
-    });
-    firebase.auth().signInWithPhoneNumber(ADMIN_PHONE,rc)
-      .then(function(result){
-        CONFIRM_ADM=result;
-        G('adm1').style.display='none';
-        G('adm2').style.display='block';
-        btn.disabled=false; btn.textContent='📤 Send Admin OTP';
-        startTimer('admCd','admResend',60,ADM_TMR);
-        showToast('OTP sent to admin phone','success');
-      })
-      .catch(function(e){
-        btn.disabled=false; btn.textContent='📤 Send Admin OTP';
-        showErr('admPhErr','Failed: '+e.message);
-        try{ rc.clear(); }catch(ex){}
-        G('admRcDiv').innerHTML='';
-      });
-  }catch(e){
-    btn.disabled=false; btn.textContent='📤 Send Admin OTP';
-    showErr('admPhErr','Error: '+e.message);
-  }
-}
-
-function verifyAdminOTP(){
-  var code=(G('admOtp').value||'').trim();
-  if(code.length!==6){ showErr('admOtpErr','Enter 6-digit OTP'); return; }
-  if(!CONFIRM_ADM){ showErr('admOtpErr','Send OTP first'); return; }
-  hideErr('admOtpErr');
-  CONFIRM_ADM.confirm(code)
+  var btn=G('admOtpBtn'); btn.disabled=true; btn.textContent='Logging in...';
+  firebase.auth().signInWithEmailAndPassword(ADMIN_EMAIL_ID, pw)
     .then(function(){
-      // Verified — open admin portal
       showLoginShell();
       setTimeout(function(){ openAdmin(); },300);
     })
     .catch(function(e){
-      showErr('admOtpErr',
-        e.code==='auth/invalid-verification-code'?'Wrong OTP':
-        e.code==='auth/code-expired'?'OTP expired':'Error: '+e.message);
+      btn.disabled=false; btn.textContent='🔑 Admin Login';
+      showErr('admPhErr',
+        e.code==='auth/wrong-password'?'Wrong password':
+        'Login failed: '+e.message);
     });
+}
+
+function verifyAdminOTP(){
+  /* Not used */
 }
 
 function goAdmBack(){
@@ -3359,52 +3349,30 @@ function goAdmBack(){
 
 /* ── ADMIN OTP (from portal) ── */
 function sendAdminOTPFromPortal(){
+  /* Admin login via Email + Password — OTP billing not enabled */
+  var pw=(G('admLPwd').value||'').trim();
+  if(!pw){ showErr('admLErr','Enter admin password'); return; }
   hideErr('admLErr');
-  var btn=G('admLBtn'); btn.disabled=true; btn.textContent='Sending OTP...';
-  G('admLRcDiv').innerHTML='';
-  try{
-    var rc=new firebase.auth.RecaptchaVerifier('admLRcDiv',{
-      size:'invisible', callback:function(){}
-    });
-    firebase.auth().signInWithPhoneNumber(ADMIN_PHONE,rc)
-      .then(function(result){
-        CONFIRM_ADM=result;
-        G('admLogin1').style.display='none';
-        G('admLogin2').style.display='block';
-        btn.disabled=false; btn.textContent='📤 Send OTP to Admin Phone';
-        startTimer('admLCd',null,60,ADM_L_TMR);
-        showToast('OTP sent to +91 8975962565','success');
-      })
-      .catch(function(e){
-        btn.disabled=false; btn.textContent='📤 Send OTP to Admin Phone';
-        showErr('admLErr','Failed: '+e.message);
-        try{ rc.clear(); }catch(ex){}
-        G('admLRcDiv').innerHTML='';
-      });
-  }catch(e){
-    btn.disabled=false; btn.textContent='📤 Send OTP to Admin Phone';
-    showErr('admLErr','Error: '+e.message);
-  }
-}
-
-function verifyAdminPortalOTP(){
-  var code=(G('admLOtp').value||'').trim();
-  if(code.length!==6){ showErr('admLOtpErr','Enter 6-digit OTP'); return; }
-  if(!CONFIRM_ADM){ showErr('admLOtpErr','Send OTP first'); return; }
-  hideErr('admLOtpErr');
-  CONFIRM_ADM.confirm(code)
-    .then(function(){
+  var btn=G('admLBtn'); btn.disabled=true; btn.textContent='Logging in...';
+  firebase.auth().signInWithEmailAndPassword(ADMIN_EMAIL_ID, pw)
+    .then(function(c){
       G('adminLoginBox').style.display='none';
       G('adminDash').style.display='block';
-      G('adminUsr').textContent='+91 8975962565';
+      G('adminUsr').textContent=c.user.email;
       showToast('Welcome Admin! 👑','success');
       aLoadAll(); aLoadCurQR(); aStartPayListener(); aLoadSettings();
     })
     .catch(function(e){
-      showErr('admLOtpErr',
-        e.code==='auth/invalid-verification-code'?'Wrong OTP':
-        e.code==='auth/code-expired'?'OTP expired':'Error: '+e.message);
+      btn.disabled=false; btn.textContent='🔑 Login';
+      showErr('admLErr',
+        e.code==='auth/wrong-password'?'Wrong password':
+        e.code==='auth/user-not-found'?'Admin account not found':
+        'Login failed: '+e.message);
     });
+}
+
+function verifyAdminPortalOTP(){
+  /* Not used - kept for compatibility */
 }
 
 /* ── GOOGLE ── */
@@ -3742,10 +3710,15 @@ function loadCloudList(){
   list.innerHTML='<div style="color:#aaa;font-size:.65rem;padding:.4rem">Loading...</div>';
   var db=firebase.firestore();
   // Own estimates
-  db.collection('estimates').where('uid','==',CU.uid).orderBy('updatedAt','desc').limit(20).get()
+  db.collection('estimates').where('uid','==',CU.uid).limit(50).get()
     .then(function(snap){
       var all=[];
       snap.forEach(function(doc){ all.push({id:doc.id,d:doc.data(),own:true}); });
+      all.sort(function(a,b){
+        var ta=a.d.updatedAt?a.d.updatedAt.seconds:0;
+        var tb=b.d.updatedAt?b.d.updatedAt.seconds:0;
+        return tb-ta;
+      });
       // Shared with me (by email)
       if(CU.email){
         return db.collection('estimates')
