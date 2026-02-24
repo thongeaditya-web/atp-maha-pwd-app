@@ -300,10 +300,10 @@ tr:hover td{background:#fdf8f3}
 .otimer .hl{color:#f5a623;font-weight:700}
 .afoot{padding:.55rem 1.2rem;text-align:center;font-size:.58rem;color:#444;border-top:1px solid #222}
 #userHeaderDiv{display:inline-flex;align-items:center;gap:.35rem;flex-wrap:wrap}
-.uname{font-size:.68rem;color:#f5a623;font-weight:800}
-.ubadge{font-size:.5rem;padding:.1rem .35rem;border-radius:8px;font-weight:800}
+.uname{font-size:.8rem;color:#f5a623;font-weight:800}
+.ubadge{font-size:.65rem;padding:.15rem .45rem;border-radius:8px;font-weight:800}
 .ufree{background:#1a3000;color:#8bc34a}.upro{background:#18602f;color:#fff}
-.ubtn{background:none;border:1px solid #333;color:#888;font-size:.58rem;padding:.2rem .4rem;border-radius:4px;cursor:pointer}
+.ubtn{background:none;border:1px solid #555;color:#ccc;font-size:.72rem;padding:.28rem .55rem;border-radius:4px;cursor:pointer;font-weight:600}
 .ubtn:hover{border-color:#f5a623;color:#f5a623}
 #payWall{display:none;position:fixed;inset:0;z-index:9001;background:rgba(0,0,0,.92);align-items:center;justify-content:center;padding:1rem;overflow-y:auto}
 .pwcard{background:#1c1c1c;border:1px solid #2a2a2a;border-radius:14px;max-width:360px;width:100%;overflow:hidden;margin:auto}
@@ -641,7 +641,7 @@ service cloud.firestore {<br>
 
 <div id="appShell" style="display:none">
 <nav><div class="nb"><h1>ATP&#39;s Maha PWD Estimate App</h1><p>Maharashtra PWD · SSR 2022-23 · 2009 items</p></div><div class="ns"><div class="nst"><div class="nv" id="hIt">0</div><div class="nl">Items</div></div><div class="nst"><div class="nv" id="hTot">&#8377;0</div><div class="nl">Grand Total</div></div></div><button id="installBtn" onclick="window.__pwaInstall&&window.__pwaInstall()" style="display:none;align-items:center;gap:.28rem;background:#f5a623;color:#18150f;border:none;border-radius:4px;padding:.28rem .56rem;font-size:.58rem;font-weight:800;cursor:pointer;white-space:nowrap;font-family:inherit">&#8595; Install App</button><div id="userHeaderDiv" style="display:inline-flex;align-items:center;gap:.35rem;flex-wrap:wrap;margin-left:.5rem"></div></nav>
-<div class="tabs"><div class="tab on" id="t0" onclick="goTab(0)">Main</div><div class="tab" id="t1" onclick="goTab(1)">Lead Chart</div><div class="tab" id="t2" onclick="goTab(2)">Search <span class="tbdg" id="b2">0</span></div><div class="tab" id="t3" onclick="goTab(3)">Abstract</div><div class="tab" id="t4" onclick="goTab(4)">Rate Analysis</div><div class="tab" id="t5" onclick="goTab(5)">Measurements</div><div class="tab" id="t6" onclick="goTab(6)">Consumption</div><div class="tab" id="t7" onclick="goTab(7)">Royalty</div><div class="tab" id="t8" onclick="goTab(8)">General Abstract</div><div class="tab" id="t9" onclick="goTab(9)">Steel Calculator</div><div class="tab" id="t10" onclick="goTab(10)">&#9881; Settings</div><div class="tab" id="t11" onclick="goTab(11)">🧪 Testing</div><div class="tab" id="t12" onclick="goTab(12)">📍 Lead Map</div></div>
+<div class="tabs"><div class="tab on" id="t0" onclick="goTab(0)">Main</div><div class="tab" id="t1" onclick="goTab(1)">Lead Chart</div><div class="tab" id="t2" onclick="goTab(2)">Search <span class="tbdg" id="b2">0</span></div><div class="tab" id="t3" onclick="goTab(3)">Abstract</div><div class="tab" id="t4" onclick="goTab(4)">Rate Analysis</div><div class="tab" id="t5" onclick="goTab(5)">Measurements</div><div class="tab" id="t6" onclick="goTab(6)">Consumption</div><div class="tab" id="t7" onclick="goTab(7)">Royalty</div><div class="tab" id="t8" onclick="goTab(8)">General Abstract</div><div class="tab" id="t9" onclick="goTab(9)">Steel Calculator</div><div class="tab" id="t10" onclick="goTab(10)">&#9881; Settings</div><div class="tab" id="t11" onclick="goTab(11)">🧪 Testing</div><div class="tab" id="t12" onclick="goTab(12)">📍 Lead Map</div><div class="tab" id="t13" onclick="goTab(13)">👥 Browse</div><div class="tab" id="t14" onclick="goTab(14)">📞 Contact</div></div>
 
 <div class="lay">
 <div class="main">
@@ -692,7 +692,15 @@ service cloud.firestore {<br>
 </div>
 <div style="margin-top:2rem;padding:1.5rem 3rem;border-top:1px solid #999;page-break-inside:avoid"><div style="display:flex;justify-content:space-between"><div style="text-align:left;flex:1"><div style="font-size:.72rem;line-height:1.8;font-style:italic"><div><span class="stmp-se">Section Engineer</span>,</div><div class="stmp-loc">P.W. Sub Division</div></div></div><div style="text-align:right;flex:1"><div style="font-size:.72rem;line-height:1.8;font-style:italic"><div><span class="stmp-sde">Sub Divisional Engineer</span>,</div><div class="stmp-loc">P.W. Sub Division</div></div></div></div></div></div>
 
-<div class="panel" id="p10"><div class="sh"><div class="n">S</div><h2>Settings</h2></div><div class="sc" style="max-width:295px"><h3>GA Percentages</h3><div class="srow"><label>GST %</label><input type="number" id="sGST" value="18" min="0" step=".5" oninput="updateAll()"><span class="su">%</span></div><div class="srow"><label>Contingencies %</label><input type="number" id="sCont" value="2" min="0" step=".5" oninput="updateAll()"><span class="su">%</span></div><div class="srow"><label>Labour Insurance %</label><input type="number" id="sLI" value="1" min="0" step=".5" oninput="updateAll()"><span class="su">%</span></div><h3 style="margin-top:.52rem">Royalty Rates</h3><div class="srow"><label>Sand (&#8377;/M3)</label><input type="number" id="sRS" value="150" min="0" oninput="updateAll()"><span class="su">&#8377;</span></div><div class="srow"><label>Coarse (&#8377;/M3)</label><input type="number" id="sRC" value="80" min="0" oninput="updateAll()"><span class="su">&#8377;</span></div></div><div class="sc" style="max-width:520px;margin-top:.52rem"><h3>Saved Estimates</h3><div id="saveList"><div style="color:var(--mu);font-size:.62rem;padding:.5rem 0;font-style:italic">No saved estimates yet</div></div></div><div style="margin-top:2rem;padding:1.5rem 3rem;border-top:1px solid #999;page-break-inside:avoid"><div style="display:flex;justify-content:space-between"><div style="text-align:left;flex:1"><div style="font-size:.72rem;line-height:1.8;font-style:italic"><div><span class="stmp-se">Section Engineer</span>,</div><div class="stmp-loc">P.W. Sub Division</div></div></div><div style="text-align:right;flex:1"><div style="font-size:.72rem;line-height:1.8;font-style:italic"><div><span class="stmp-sde">Sub Divisional Engineer</span>,</div><div class="stmp-loc">P.W. Sub Division</div></div></div></div></div></div>
+<div class="panel" id="p10"><div class="sh"><div class="n">S</div><h2>Settings</h2></div><div class="sc" style="max-width:295px"><h3>GA Percentages</h3><div class="srow"><label>GST %</label><input type="number" id="sGST" value="18" min="0" step=".5" oninput="updateAll()"><span class="su">%</span></div><div class="srow"><label>Contingencies %</label><input type="number" id="sCont" value="2" min="0" step=".5" oninput="updateAll()"><span class="su">%</span></div><div class="srow"><label>Labour Insurance %</label><input type="number" id="sLI" value="1" min="0" step=".5" oninput="updateAll()"><span class="su">%</span></div><h3 style="margin-top:.52rem">Royalty Rates</h3><div class="srow"><label>Sand (&#8377;/M3)</label><input type="number" id="sRS" value="150" min="0" oninput="updateAll()"><span class="su">&#8377;</span></div><div class="srow"><label>Coarse (&#8377;/M3)</label><input type="number" id="sRC" value="80" min="0" oninput="updateAll()"><span class="su">&#8377;</span></div></div><div class="sc" style="max-width:520px;margin-top:.52rem"><h3>💾 Local Saved Estimates</h3><div id="saveList"><div style="color:var(--mu);font-size:.62rem;padding:.5rem 0;font-style:italic">No saved estimates yet</div></div>
+<div style="margin-top:.8rem">
+<h3 style="display:flex;align-items:center;justify-content:space-between">☁️ Cloud Saved Estimates <button class="btn bp" style="font-size:.58rem;padding:.2rem .45rem" onclick="loadCloudList()">🔄 Refresh</button></h3>
+<div id="cloudEstList" style="max-height:300px;overflow-y:auto">
+<div style="color:var(--mu);font-size:.62rem;padding:.5rem 0;font-style:italic">Login to see cloud estimates</div>
+</div>
+<button class="btn" style="margin-top:.4rem;background:#18602f;color:#fff;width:100%;font-size:.68rem" onclick="cloudSave()">☁️ Save to Cloud</button>
+<button class="btn" style="margin-top:.3rem;background:#2a5298;color:#fff;width:100%;font-size:.68rem" onclick="newEstimate()">➕ New Estimate</button>
+</div></div><div style="margin-top:2rem;padding:1.5rem 3rem;border-top:1px solid #999;page-break-inside:avoid"><div style="display:flex;justify-content:space-between"><div style="text-align:left;flex:1"><div style="font-size:.72rem;line-height:1.8;font-style:italic"><div><span class="stmp-se">Section Engineer</span>,</div><div class="stmp-loc">P.W. Sub Division</div></div></div><div style="text-align:right;flex:1"><div style="font-size:.72rem;line-height:1.8;font-style:italic"><div><span class="stmp-sde">Sub Divisional Engineer</span>,</div><div class="stmp-loc">P.W. Sub Division</div></div></div></div></div></div>
 
 <div class="panel" id="p11">
 <div class="sh"><div class="n">11</div><h2>Material Testing Frequency</h2><button onclick="openStampModal()" style="margin-left:1rem;padding:.35rem .9rem;background:#0284c7;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:.65rem;font-weight:600">✏️ Edit Stamps</button></div>
@@ -1680,8 +1688,9 @@ function rSum(){
 function goTab(n){
   if(n===9&&typeof scRender==='function')scRender();
   if(n===12&&typeof drawLeadDiagram==='function')setTimeout(drawLeadDiagram,100);
+  if(n===13&&typeof loadBrowse==='function')setTimeout(loadBrowse,50);
   var i,p,t;
-  for(i=0;i<=12;i++){
+  for(i=0;i<=14;i++){
     p=R('p'+i);if(p)p.classList.toggle('on',i===n);
     t=R('t'+i);if(t)t.classList.toggle('on',i===n);
   }
@@ -2556,7 +2565,54 @@ upMeta();
     </div>
     <div id="cfEditorBody" style="padding:1rem"></div>
   </div>
-<div style="margin-top:2.5rem;padding:1.5rem;background:#fff;border:1px solid #999;border-radius:4px;page-break-inside:avoid"><div style="text-align:center;font-weight:700;font-size:.88rem;margin-bottom:1rem;text-decoration:underline;letter-spacing:.3px">CERTIFICATE</div><div style="font-size:.7rem;line-height:1.9;padding-left:1rem"><div style="margin-bottom:.5rem">1. Certified that the nearest quarry for materials is considered while framing the estimate.</div><div style="margin-bottom:.5rem">2. Certified that sufficient materials are available in the quarry.</div><div style="margin-bottom:.5rem">3. Certified that material available in the quarry is of good quality.</div></div></div><div style="margin-top:2rem;padding:1.5rem 3rem;border-top:1px solid #999;page-break-inside:avoid"><div style="display:flex;justify-content:space-between"><div style="text-align:left;flex:1"><div style="font-size:.72rem;line-height:1.8;font-style:italic"><div><span class="stmp-se">Section Engineer</span>,</div><div class="stmp-loc">P.W. Sub Division</div></div></div><div style="text-align:right;flex:1"><div style="font-size:.72rem;line-height:1.8;font-style:italic"><div><span class="stmp-sde">Sub Divisional Engineer</span>,</div><div class="stmp-loc">P.W. Sub Division</div></div></div></div></div></div>
+<div style="margin-top:2.5rem;padding:1.5rem;background:#fff;border:1px solid #999;border-radius:4px;page-break-inside:avoid"><div style="text-align:center;font-weight:700;font-size:.88rem;margin-bottom:1rem;text-decoration:underline;letter-spacing:.3px">CERTIFICATE</div><div style="font-size:.7rem;line-height:1.9;padding-left:1rem"><div style="margin-bottom:.5rem">1. Certified that the nearest quarry for materials is considered while framing the estimate.</div><div style="margin-bottom:.5rem">2. Certified that sufficient materials are available in the quarry.</div><div style="margin-bottom:.5rem">3. Certified that material available in the quarry is of good quality.</div></div></div><div style="margin-top:2rem;padding:1.5rem 3rem;border-top:1px solid #999;page-break-inside:avoid"><div style="display:flex;justify-content:space-between"><div style="text-align:left;flex:1"><div style="font-size:.72rem;line-height:1.8;font-style:italic"><div><span class="stmp-se">Section Engineer</span>,</div><div class="stmp-loc">P.W. Sub Division</div></div></div><div style="text-align:right;flex:1"><div style="font-size:.72rem;line-height:1.8;font-style:italic"><div><span class="stmp-sde">Sub Divisional Engineer</span>,</div><div class="stmp-loc">P.W. Sub Division</div></div></div></div></div>
+<div class="panel noprt" id="p13">
+<div class="sh"><div class="n">👥</div><h2>Browse Estimates</h2></div>
+<div class="pth"><div class="pth-work"></div><div class="pth-sheet">Community Estimates</div></div>
+<div style="background:#e3f2fd;border-left:4px solid #1565c0;padding:.5rem .7rem;margin-bottom:.8rem;font-size:.65rem;color:#1a237e">
+  <strong>👥 Browse estimates shared by other users.</strong> You can request a copy from the owner.
+</div>
+<div style="display:flex;gap:.5rem;margin-bottom:.6rem;flex-wrap:wrap">
+  <input type="text" id="browseQ" placeholder="Search by name..." style="flex:1;min-width:120px;font-size:.68rem;padding:.3rem .5rem;border:1px solid #ddd;border-radius:4px" oninput="browseSearch()">
+  <button class="btn bp" onclick="loadBrowse()">🔄 Refresh</button>
+</div>
+<div id="browseList" style="font-size:.68rem;color:#aaa;font-style:italic;padding:.5rem 0">Loading...</div>
+</div>
+
+<div class="panel noprt" id="p14">
+<div class="sh"><div class="n">📞</div><h2>Contact Us</h2></div>
+<div class="pth"><div class="pth-work"></div><div class="pth-sheet">Help & Support</div></div>
+<div style="max-width:480px;margin:0 auto">
+<div style="background:#fff8e1;border:1px solid #f5a623;border-radius:8px;padding:1rem;margin-bottom:1rem">
+  <div style="font-weight:900;font-size:.8rem;color:#e65100;margin-bottom:.5rem">🏗️ ATP's Maha PWD Estimate App</div>
+  <div style="font-size:.68rem;color:#555;line-height:1.8">
+    <div>📧 <strong>Email:</strong> thongeaditya@gmail.com</div>
+    <div>💳 <strong>UPI:</strong> adityathonge@ybl</div>
+    <div>🌐 <strong>App:</strong> Maharashtra PWD SSR 2022-23</div>
+  </div>
+</div>
+<div style="background:#f8f6f2;border-radius:8px;padding:1rem;margin-bottom:1rem">
+  <div style="font-weight:800;font-size:.75rem;color:#18150f;margin-bottom:.6rem">❓ Frequently Asked Questions</div>
+  <div style="font-size:.65rem;color:#444;line-height:2">
+    <div style="border-bottom:1px solid #ddd;padding-bottom:.4rem;margin-bottom:.4rem"><strong>Q: किती free downloads आहेत?</strong><br>A: प्रत्येक user ला 5 free downloads आहेत.</div>
+    <div style="border-bottom:1px solid #ddd;padding-bottom:.4rem;margin-bottom:.4rem"><strong>Q: Payment कशी करायची?</strong><br>A: Print/Download button दाबल्यावर QR code scan करा, screenshot upload करा.</div>
+    <div style="border-bottom:1px solid #ddd;padding-bottom:.4rem;margin-bottom:.4rem"><strong>Q: Payment verify कधी होते?</strong><br>A: Admin 15 मिनिटांत verify करतो किंवा auto-approve होतो.</div>
+    <div style="border-bottom:1px solid #ddd;padding-bottom:.4rem;margin-bottom:.4rem"><strong>Q: Data save होतो का?</strong><br>A: हो, Settings tab मध्ये Cloud Save button आहे.</div>
+    <div><strong>Q: Technical problem आली तर?</strong><br>A: खाली form fill करा किंवा email करा.</div>
+  </div>
+</div>
+<div style="background:#fff;border:1px solid #ddd;border-radius:8px;padding:1rem">
+  <div style="font-weight:800;font-size:.75rem;color:#18150f;margin-bottom:.6rem">📝 Send Message to Admin</div>
+  <div style="margin-bottom:.4rem"><input type="text" id="ctName" placeholder="Your Name" style="width:100%;font-size:.68rem;padding:.35rem .5rem;border:1px solid #ddd;border-radius:4px;box-sizing:border-box"></div>
+  <div style="margin-bottom:.4rem"><input type="text" id="ctSubj" placeholder="Subject (e.g. Payment issue, Bug report)" style="width:100%;font-size:.68rem;padding:.35rem .5rem;border:1px solid #ddd;border-radius:4px;box-sizing:border-box"></div>
+  <div style="margin-bottom:.6rem"><textarea id="ctMsg" rows="3" placeholder="Describe your issue..." style="width:100%;font-size:.68rem;padding:.35rem .5rem;border:1px solid #ddd;border-radius:4px;resize:vertical;box-sizing:border-box"></textarea></div>
+  <button class="btn bg" style="width:100%;font-size:.72rem" onclick="sendContact()">📤 Send Message</button>
+  <div id="ctErr" style="display:none;color:red;font-size:.63rem;margin-top:.3rem"></div>
+  <div id="ctOK" style="display:none;color:green;font-size:.63rem;margin-top:.3rem">✅ Message sent! Admin will respond via email.</div>
+</div>
+</div>
+</div>
+</div>
 
 </body>
 </html,["14.01","Steel Reinforcement (Total from Steel Calculator)","Quintal",4800],["14.01","Steel Reinforcement (from Steel Calculator)","Quintal",4800]
@@ -2846,7 +2902,16 @@ function submitPay(){
 function createPayRec(ssURL){
   var db=firebase.firestore(),autoAt=new Date(Date.now()+15*60*1000).toISOString();
   db.collection("payments").add({uid:CU.uid,phone:CU.phoneNumber||"",email:CU.email||"",name:CU.displayName||CU.phoneNumber||"",amount:PAY_AMOUNT,upiId:UPI_ID,screenshotURL:ssURL,status:"pending",createdAt:firebase.firestore.FieldValue.serverTimestamp(),autoApproveAt:autoAt})
-    .then(function(ref){CUR_PAY_ID=ref.id;showPayStat("pending");startAutoApprove(ref.id);showToast("Submitted! Pending verification ⏳","success");})
+    .then(function(ref){CUR_PAY_ID=ref.id;showPayStat("pending");startAutoApprove(ref.id);showToast("Submitted! Pending verification ⏳","success");
+      /* Real-time listener: notify user when admin verifies */
+      if(window.firebase&&firebase.firestore){
+        firebase.firestore().collection("payments").doc(ref.id).onSnapshot(function(d){
+          if(!d.exists)return;var st=d.data().status;
+          if(st==="verified")showPayStat("verified");
+          else if(st==="rejected")showPayStat("rejected");
+        });
+      }
+    })
     .catch(function(e){G("ssBtn").disabled=false;G("ssBtn").textContent="📤 Submit Screenshot";showToast("Error: "+e.message,"error");});
 }
 
@@ -3100,9 +3165,29 @@ function fEsts(){var q=(G("estQ").value||"").toLowerCase();if(!q){aRenderEsts(AD
 function aRenderRev(){
   if(!G("revDiv"))return;
   var v=AD.pays.filter(function(p){return p.status==="verified";});
-  G("revDiv").innerHTML="<div>💰 Revenue: ₹"+v.reduce(function(s,p){return s+(p.amount||PAY_AMOUNT);},0).toLocaleString("en-IN")+"</div><div>✅ Verified: "+v.length+"</div><div>⏳ Pending: "+AD.pays.filter(function(p){return p.status==="pending";}).length+"</div><div>👥 Users: "+AD.users.length+"</div><div>📁 Estimates: "+AD.ests.length+"</div><div style='color:#f5a623;font-weight:800'>⚡ Price: ₹"+PAY_AMOUNT+" · Free: "+FREE_LIMIT+"/user</div>";
+  var total=v.reduce(function(s,p){return s+(p.amount||PAY_AMOUNT);},0);
+  var rows=v.map(function(p){
+    return "<div style='display:flex;align-items:center;gap:.4rem;padding:.22rem 0;border-bottom:1px solid #eee;font-size:.66rem'>"+
+      "<span style='flex:1;font-weight:700'>"+esc(p.name||"—")+"</span>"+
+      "<span style='color:#18602f;font-weight:800'>₹"+(p.amount||PAY_AMOUNT)+"</span>"+
+      "<span style='font-size:.58rem;color:#aaa'>"+aDt(p.createdAt)+"</span>"+
+      "<button class='xbtn xrd' style='font-size:.56rem;padding:.12rem .3rem' onclick='aDelPay(\'"+p._id+"\')'>🗑️</button>"+
+    "</div>";
+  }).join("");
+  G("revDiv").innerHTML=
+    "<div style='display:grid;grid-template-columns:1fr 1fr;gap:.4rem;margin-bottom:.6rem'>"+
+    "<div style='background:#e8f5e9;border-radius:5px;padding:.5rem;text-align:center'><div style='font-size:.95rem;font-weight:900;color:#18602f'>₹"+total.toLocaleString("en-IN")+"</div><div style='font-size:.58rem;color:#555'>Total Revenue</div></div>"+
+    "<div style='background:#fce4ec;border-radius:5px;padding:.5rem;text-align:center'><div style='font-size:.95rem;font-weight:900;color:#c62828'>"+AD.pays.filter(function(p){return p.status==="pending";}).length+"</div><div style='font-size:.58rem;color:#555'>Pending</div></div>"+
+    "</div>"+
+    "<div style='font-size:.63rem;font-weight:800;color:#555;margin-bottom:.3rem'>💳 Verified Payments (click 🗑️ to delete):</div>"+
+    (rows||"<div style='color:#aaa;font-size:.63rem;font-style:italic'>No verified payments yet</div>");
 }
-
+function aDelPay(payId){
+  if(!confirm("Delete this payment record?"))return;
+  firebase.firestore().collection("payments").doc(payId).delete()
+    .then(function(){showToast("Deleted","info");aLoadAll();})
+    .catch(function(e){showToast("Error: "+e.message,"error");});
+}
 function aLoadSettings(){if(!window.firebase||!firebase.firestore)return;firebase.firestore().collection("config").doc("app").get().then(function(d){if(d.exists){if(d.data().payAmount&&G("setPriceVal"))G("setPriceVal").value=d.data().payAmount;if(d.data().freeLimit&&G("setFreeVal"))G("setFreeVal").value=d.data().freeLimit;}}).catch(function(){});}
 
 function saveAppSetting(type){
@@ -3173,5 +3258,96 @@ function autoLoad(){
     if(typeof upMeta==='function')upMeta();
   }catch(e){}
 }
+
+/* ── BROWSE ESTIMATES ─────────────────────────────────────────── */
+var BROWSE_ALL=[];
+function loadBrowse(){
+  var list=G("browseList");if(!list)return;
+  if(!CU||!window.firebase||!firebase.firestore){
+    list.innerHTML="<div style='color:#aaa;font-style:italic'>Login required to browse</div>";return;
+  }
+  list.innerHTML="<div class='aloading'><span class='spin2'></span> Loading...</div>";
+  firebase.firestore().collection("estimates")
+    .where("isPublic","==",true).limit(50).get()
+    .then(function(snap){
+      BROWSE_ALL=[];
+      snap.forEach(function(d){BROWSE_ALL.push({id:d.id,d:d.data()});});
+      /* Also load all estimates (for now show all, later filter by public) */
+      if(!BROWSE_ALL.length){
+        /* Fallback: load recent estimates from all users */
+        firebase.firestore().collection("estimates")
+          .orderBy("updatedAt","desc").limit(30).get()
+          .then(function(s2){
+            BROWSE_ALL=[];
+            s2.forEach(function(d){
+              var dd=d.data();
+              if(dd.uid!==CU.uid)BROWSE_ALL.push({id:d.id,d:dd}); /* exclude own */
+            });
+            renderBrowse(BROWSE_ALL);
+          }).catch(function(){renderBrowse([]);});
+        return;
+      }
+      renderBrowse(BROWSE_ALL);
+    }).catch(function(){renderBrowse([]);});
+}
+function renderBrowse(list){
+  var el=G("browseList");if(!el)return;
+  if(!list.length){el.innerHTML="<div style='color:#aaa;font-style:italic;padding:1rem 0'>No public estimates found</div>";return;}
+  el.innerHTML=list.map(function(item){
+    var d=item.d,id=item.id;
+    var dt=d.updatedAt?new Date(d.updatedAt.seconds*1000).toLocaleDateString("en-IN"):"—";
+    var gr=d.grand?"₹"+fmtN(d.grand):"";
+    return "<div style='background:#fff;border:1px solid #e0ddd8;border-radius:6px;padding:.55rem .7rem;margin-bottom:.4rem;display:flex;align-items:center;gap:.5rem'>"+
+      "<div style='flex:1'>"+
+        "<div style='font-weight:800;font-size:.72rem;color:#18150f'>"+esc(d.name||"Untitled")+"</div>"+
+        "<div style='font-size:.6rem;color:#888'>"+dt+(gr?" · "+gr:"")+(d.uid?" · "+esc((d.cover&&d.cover.pDiv)||""):"")+"</div>"+
+      "</div>"+
+      "<button class='btn bp' style='font-size:.6rem;padding:.2rem .4rem' onclick='requestEst(this.dataset.id,this.dataset.nm)' data-id='"+id+"' data-nm='"+esc(d.name||"Untitled")+"'>📩 Request</button>"+
+    "</div>";
+  }).join("");
+}
+function browseSearch(){
+  var q=(G("browseQ").value||"").toLowerCase();
+  renderBrowse(q?BROWSE_ALL.filter(function(x){return(x.d.name||"").toLowerCase().includes(q);}):BROWSE_ALL);
+}
+function requestEst(estId,estName){
+  if(!CU){showToast("Login first","warn");return;}
+  if(!window.firebase||!firebase.firestore)return;
+  firebase.firestore().collection("requests").add({
+    fromUid:CU.uid,fromName:CU.displayName||CU.email||"",fromEmail:CU.email||"",
+    estId:estId,estName:estName,
+    status:"pending",
+    createdAt:firebase.firestore.FieldValue.serverTimestamp()
+  }).then(function(){showToast("Request sent! Owner will be notified 📩","success");})
+  .catch(function(e){showToast("Error: "+e.message,"error");});
+}
+
+/* ── CONTACT US ─────────────────────────────────────────────── */
+function sendContact(){
+  var name=(G("ctName").value||"").trim();
+  var subj=(G("ctSubj").value||"").trim();
+  var msg=(G("ctMsg").value||"").trim();
+  hideE("ctErr");hideE("ctOK");
+  if(!name){showE("ctErr","Please enter your name");return;}
+  if(!msg){showE("ctErr","Please enter a message");return;}
+  if(!CU||!window.firebase||!firebase.firestore){showE("ctErr","Login required");return;}
+  var btn=G("ctMsg").nextElementSibling;
+  if(btn){btn.disabled=true;btn.textContent="Sending...";}
+  firebase.firestore().collection("contacts").add({
+    uid:CU.uid,name:name,email:CU.email||"",
+    subject:subj||"General Enquiry",message:msg,
+    status:"new",
+    createdAt:firebase.firestore.FieldValue.serverTimestamp()
+  }).then(function(){
+    G("ctName").value="";G("ctSubj").value="";G("ctMsg").value="";
+    if(btn){btn.disabled=false;btn.textContent="📤 Send Message";}
+    if(G("ctOK")){G("ctOK").style.display="block";}
+    showToast("Message sent! ✅","success");
+  }).catch(function(e){
+    if(btn){btn.disabled=false;btn.textContent="📤 Send Message";}
+    showE("ctErr","Error: "+e.message);
+  });
+}
+
 </script>
 </body>
