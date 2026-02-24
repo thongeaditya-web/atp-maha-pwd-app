@@ -2597,8 +2597,9 @@ upMeta();
 <div style="background:#fff8e1;border:1px solid #f5a623;border-radius:8px;padding:1rem;margin-bottom:1rem">
   <div style="font-weight:900;font-size:.8rem;color:#e65100;margin-bottom:.5rem">🏗️ ATP's Maha PWD Estimate App</div>
   <div style="font-size:.68rem;color:#555;line-height:1.8">
-    <div>📧 <strong>Email:</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="22564a4d4c454743464b565b4362454f434b4e0c414d4f">[email&#160;protected]</a></div>
-    <div>💳 <strong>UPI:</strong> adityathonge@ybl</div>
+    <div>&#128247; <strong>Email:</strong> thongeaditya&#64;gmail.com</div>
+    <div>&#128241; <strong>Mobile / WhatsApp:</strong> 8975962565</div>
+    <div>&#128179; <strong>UPI:</strong> adityathonge&#64;ybl</div>
     <div>🌐 <strong>App:</strong> Maharashtra PWD SSR 2022-23</div>
   </div>
 </div>
@@ -2728,6 +2729,17 @@ function loadAppCfg(){
 
 function loadUserDoc(){
   if(!CU||!window.firebase||!firebase.firestore)return;
+  /* Real-time listener — fires when admin updates freeLimit or isPro */
+  firebase.firestore().collection("users").doc(CU.uid).onSnapshot(function(d){
+    if(!d.exists)return;
+    var prev=FREE_LIMIT;
+    IS_PRO=d.data().isPro||false;
+    DL_COUNT=d.data().dlCount||0;
+    if(d.data().freeLimit!=null)FREE_LIMIT=d.data().freeLimit;
+    if(typeof renderHeader==="function")renderHeader();
+    /* If freeLimit increased, notify user */
+    if(FREE_LIMIT>prev&&prev>0)showToast("Payment verified! You can now download. ✅","success");
+  });
   firebase.firestore().collection("users").doc(CU.uid).get().then(function(d){
     if(d.exists){IS_PRO=d.data().isPro||false;DL_COUNT=d.data().dlCount||0;if(d.data().freeLimit!=null)FREE_LIMIT=d.data().freeLimit;}
     else{firebase.firestore().collection("users").doc(CU.uid).set({uid:CU.uid,phone:CU.phoneNumber||"",email:CU.email||"",name:CU.displayName||"",isPro:false,dlCount:0,createdAt:firebase.firestore.FieldValue.serverTimestamp()});}
@@ -3434,6 +3446,17 @@ function loadAppCfg(){
 
 function loadUserDoc(){
   if(!CU||!window.firebase||!firebase.firestore)return;
+  /* Real-time listener — fires when admin updates freeLimit or isPro */
+  firebase.firestore().collection("users").doc(CU.uid).onSnapshot(function(d){
+    if(!d.exists)return;
+    var prev=FREE_LIMIT;
+    IS_PRO=d.data().isPro||false;
+    DL_COUNT=d.data().dlCount||0;
+    if(d.data().freeLimit!=null)FREE_LIMIT=d.data().freeLimit;
+    if(typeof renderHeader==="function")renderHeader();
+    /* If freeLimit increased, notify user */
+    if(FREE_LIMIT>prev&&prev>0)showToast("Payment verified! You can now download. ✅","success");
+  });
   firebase.firestore().collection("users").doc(CU.uid).get().then(function(d){
     if(d.exists){IS_PRO=d.data().isPro||false;DL_COUNT=d.data().dlCount||0;if(d.data().freeLimit!=null)FREE_LIMIT=d.data().freeLimit;}
     else{firebase.firestore().collection("users").doc(CU.uid).set({uid:CU.uid,phone:CU.phoneNumber||"",email:CU.email||"",name:CU.displayName||"",isPro:false,dlCount:0,createdAt:firebase.firestore.FieldValue.serverTimestamp()});}
@@ -3980,31 +4003,25 @@ var BROWSE_ALL=[];
 function loadBrowse(){
   var list=G("browseList");if(!list)return;
   if(!CU||!window.firebase||!firebase.firestore){
-    list.innerHTML="<div style='color:#aaa;font-style:italic'>Login required to browse</div>";return;
+    list.innerHTML="<div style='color:#aaa;font-style:italic;text-align:center;padding:1rem'>Please login to browse estimates</div>";
+    return;
   }
-  list.innerHTML="<div class='aloading'><span class='spin2'></span> Loading...</div>";
+  list.innerHTML="<div style='text-align:center;padding:1rem;color:#888'><span class='spin2'></span> Loading...</div>";
+  /* Load recent estimates from ALL users (no isPublic filter) */
   firebase.firestore().collection("estimates")
-    .where("isPublic","==",true).limit(50).get()
+    .orderBy("updatedAt","desc").limit(50).get()
     .then(function(snap){
       BROWSE_ALL=[];
-      snap.forEach(function(d){BROWSE_ALL.push({id:d.id,d:d.data()});});
-      /* Also load all estimates (for now show all, later filter by public) */
-      if(!BROWSE_ALL.length){
-        /* Fallback: load recent estimates from all users */
-        firebase.firestore().collection("estimates")
-          .orderBy("updatedAt","desc").limit(30).get()
-          .then(function(s2){
-            BROWSE_ALL=[];
-            s2.forEach(function(d){
-              var dd=d.data();
-              if(dd.uid!==CU.uid)BROWSE_ALL.push({id:d.id,d:dd}); /* exclude own */
-            });
-            renderBrowse(BROWSE_ALL);
-          }).catch(function(){renderBrowse([]);});
-        return;
-      }
+      snap.forEach(function(d){
+        var dd=d.data();
+        /* Show all estimates including own — filter own if needed */
+        BROWSE_ALL.push({id:d.id,d:dd});
+      });
       renderBrowse(BROWSE_ALL);
-    }).catch(function(){renderBrowse([]);});
+    })
+    .catch(function(e){
+      list.innerHTML="<div style='color:#c00;padding:1rem;font-size:.65rem'>Error loading: "+e.message+"</div>";
+    });
 }
 function renderBrowse(list){
   var el=G("browseList");if(!el)return;
