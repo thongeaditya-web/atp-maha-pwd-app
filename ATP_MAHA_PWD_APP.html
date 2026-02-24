@@ -22,7 +22,7 @@ nav{background:#18150f;color:#fff;padding:.5rem .9rem;display:flex;align-items:c
 .nb p{font-size:.48rem;color:#aaa}
 .ns{display:flex;gap:.8rem}.nst{text-align:right}
 .nv{font-size:.86rem;font-weight:900;color:#f5a623}.nl{font-size:.47rem;color:#aaa}
-.tabs{position:sticky;top:0;z-index:999;display:flex;background:#fff;border-bottom:2px solid #ddd;box-shadow:0 2px 4px rgba(0,0,0,0.1)}
+.tabs{position:sticky;top:0;z-index:999;display:flex;background:#fff;border-bottom:2px solid #ddd;box-shadow:0 2px 4px rgba(0,0,0,0.15);margin-left:-1.5rem;margin-right:-1.5rem;padding-left:1.5rem;overflow-x:auto}
 .tabs::-webkit-scrollbar{display:none}
 .tab{padding:.44rem .56rem;font-size:.57rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
   cursor:pointer;border-bottom:3px solid transparent;color:var(--mu);white-space:nowrap;user-select:none}
@@ -193,6 +193,8 @@ tr:hover td{background:#fdf8f3}
   nav,.tabs,.sw,.rh,.rb,.af,.fa,.bar,.dbt,.side,
   .km-in,.lead-note,.cta,.btn,button,.sh,
   #p2,#p9,#p10,#p12{display:none!important}
+  /* Lead chart: hide 0km rows in print */
+  .lc-row-zero{display:none!important}
   .cov-lbl{display:none!important}
   .cov-row{border:none!important;padding:.12rem 0!important}
   .cov-val input{border:none!important;padding:0!important;font-size:.8rem!important;font-weight:700!important;pointer-events:none;text-align:center!important;background:transparent!important}
@@ -639,7 +641,7 @@ service cloud.firestore {<br>
 
 <div id="appShell" style="display:none">
 <nav><div class="nb"><h1>ATP&#39;s Maha PWD Estimate App</h1><p>Maharashtra PWD · SSR 2022-23 · 2009 items</p></div><div class="ns"><div class="nst"><div class="nv" id="hIt">0</div><div class="nl">Items</div></div><div class="nst"><div class="nv" id="hTot">&#8377;0</div><div class="nl">Grand Total</div></div></div><button id="installBtn" onclick="window.__pwaInstall&&window.__pwaInstall()" style="display:none;align-items:center;gap:.28rem;background:#f5a623;color:#18150f;border:none;border-radius:4px;padding:.28rem .56rem;font-size:.58rem;font-weight:800;cursor:pointer;white-space:nowrap;font-family:inherit">&#8595; Install App</button><div id="userHeaderDiv" style="display:inline-flex;align-items:center;gap:.35rem;flex-wrap:wrap;margin-left:.5rem"></div></nav>
-<div class="tabs"><div class="tab on" id="t0" onclick="goTab(0)">Main</div><div class="tab" id="t1" onclick="goTab(1)">Lead Chart</div><div class="tab" id="t2" onclick="goTab(2)">Search <span class="tbdg" id="b2">0</span></div><div class="tab" id="t3" onclick="goTab(3)">Abstract</div><div class="tab" id="t4" onclick="goTab(4)">Rate Analysis</div><div class="tab" id="t5" onclick="goTab(5)">Measurements</div><div class="tab" id="t6" onclick="goTab(6)">Consumption</div><div class="tab" id="t7" onclick="goTab(7)">Royalty</div><div class="tab" id="t8" onclick="goTab(8)">General Abstract</div><div class="tab" id="t9" onclick="goTab(9)">Steel Calculator</div><div class="tab" id="t10" onclick="goTab(10)">&#9881; Settings</div><div class="tab" id="t11" onclick="goTab(11)">🧪 Testing</div></div>
+<div class="tabs"><div class="tab on" id="t0" onclick="goTab(0)">Main</div><div class="tab" id="t1" onclick="goTab(1)">Lead Chart</div><div class="tab" id="t2" onclick="goTab(2)">Search <span class="tbdg" id="b2">0</span></div><div class="tab" id="t3" onclick="goTab(3)">Abstract</div><div class="tab" id="t4" onclick="goTab(4)">Rate Analysis</div><div class="tab" id="t5" onclick="goTab(5)">Measurements</div><div class="tab" id="t6" onclick="goTab(6)">Consumption</div><div class="tab" id="t7" onclick="goTab(7)">Royalty</div><div class="tab" id="t8" onclick="goTab(8)">General Abstract</div><div class="tab" id="t9" onclick="goTab(9)">Steel Calculator</div><div class="tab" id="t10" onclick="goTab(10)">&#9881; Settings</div><div class="tab" id="t11" onclick="goTab(11)">🧪 Testing</div><div class="tab" id="t12" onclick="goTab(12)">📍 Lead Map</div></div>
 
 <div class="lay">
 <div class="main">
@@ -1677,6 +1679,7 @@ function rSum(){
 /* ── NAVIGATION ──────────────────────────────────────────────────────── */
 function goTab(n){
   if(n===9&&typeof scRender==='function')scRender();
+  if(n===12&&typeof drawLeadDiagram==='function')setTimeout(drawLeadDiagram,100);
   var i,p,t;
   for(i=0;i<=12;i++){
     p=R('p'+i);if(p)p.classList.toggle('on',i===n);
@@ -2557,6 +2560,27 @@ upMeta();
 
 </body>
 </html,["14.01","Steel Reinforcement (Total from Steel Calculator)","Quintal",4800],["14.01","Steel Reinforcement (from Steel Calculator)","Quintal",4800]
+
+<div class="panel" id="p12">
+<div class="sh"><div class="n">12</div><h2>Lead Diagram — Material Transport</h2></div>
+<div class="pth"><div class="pth-work"></div><div class="pth-sheet">Lead Distance Visualization</div></div>
+
+
+<div style="text-align:center;padding:1rem;background:#fafafa;border-radius:6px">
+<svg id="leadDiagram" width="1000" height="600" viewBox="0 0 1000 600" style="max-width:1000px;border:1px solid #ddd;background:#fff">
+  <!-- Site location (center) -->
+  <circle cx="500" cy="300" r="30" fill="#ff6f00" stroke="#e65100" stroke-width="2"/>
+  <text x="500" y="305" text-anchor="middle" font-size="12" font-weight="bold" fill="#fff">SITE</text>
+  <!-- Material sources will be drawn by JS -->
+</svg>
+</div>
+
+<div class="noprt" style="margin-top:.6rem;text-align:center">
+  <button class="btn bg" onclick="drawLeadDiagram()">🔄 Refresh Diagram</button>
+</div>
+</div>
+
+>
 </div>
 
 >
@@ -2830,7 +2854,24 @@ function showPayStat(s){
   if(G("upSec"))G("upSec").style.display="none";if(G("statSec"))G("statSec").style.display="block";
   var box=G("statBox");if(box)box.className="pstatbox "+s;
   if(s==="pending"){if(G("statTitle"))G("statTitle").textContent="⏳ Pending...";if(G("statMsg"))G("statMsg").textContent="Admin verifying. Max 15 min.";}
-  else if(s==="verified"){if(G("statTitle"))G("statTitle").textContent="✅ Verified!";if(G("statMsg"))G("statMsg").textContent="Download available now 🎉";clearInterval(AUTO_TMR);if(G("payWall"))G("payWall").style.display="none";showToast("Verified! Download now 🎉","success");}
+  else if(s==="verified"){
+    if(G("statTitle"))G("statTitle").textContent="✅ Verified!";
+    if(G("statMsg"))G("statMsg").textContent="Download available now 🎉";
+    clearInterval(AUTO_TMR);
+    if(G("payWall"))G("payWall").style.display="none";
+    showToast("Verified! Download now 🎉","success");
+    /* Reload user doc so freeLimit and DL_COUNT are fresh from Firestore */
+    if(CU&&window.firebase&&firebase.firestore){
+      firebase.firestore().collection("users").doc(CU.uid).get().then(function(d){
+        if(d.exists){
+          IS_PRO=d.data().isPro||false;
+          DL_COUNT=d.data().dlCount||0;
+          if(d.data().freeLimit!=null)FREE_LIMIT=d.data().freeLimit;
+        }
+        renderHeader();
+      }).catch(function(){});
+    }
+  }
   else{if(G("statTitle"))G("statTitle").textContent="❌ Rejected";if(G("statMsg"))G("statMsg").textContent="Contact admin or try again.";clearInterval(AUTO_TMR);}
 }
 
@@ -2839,13 +2880,34 @@ function startAutoApprove(payId){
   AUTO_TMR=setInterval(function(){
     rem--;if(G("tfill"))G("tfill").style.width=(rem/total*100).toFixed(1)+"%";
     var m=Math.floor(rem/60),s=rem%60;if(G("autoMsg"))G("autoMsg").textContent="Auto-approve in: "+m+":"+(s<10?"0":"")+s;
-    if(rem<=0){clearInterval(AUTO_TMR);firebase.firestore().collection("payments").doc(payId).update({status:"verified",autoApproved:true,verifiedAt:firebase.firestore.FieldValue.serverTimestamp()}).then(function(){showPayStat("verified");});}
+    if(rem<=0){
+      clearInterval(AUTO_TMR);
+      var db2=firebase.firestore();
+      db2.collection("payments").doc(payId).update({
+        status:"verified",autoApproved:true,
+        verifiedAt:firebase.firestore.FieldValue.serverTimestamp()
+      }).then(function(){
+        /* Also give user +1 freeLimit on auto-approve */
+        if(CU){
+          db2.collection("users").doc(CU.uid).update({
+            freeLimit:firebase.firestore.FieldValue.increment(1)
+          }).catch(function(){});
+        }
+        showPayStat("verified");
+      });
+    }
   },1000);
 }
 
 function checkPayStatus(){
   if(!CUR_PAY_ID)return;
-  firebase.firestore().collection("payments").doc(CUR_PAY_ID).get().then(function(d){if(!d.exists)return;var s=d.data().status;if(s==="verified")showPayStat("verified");else if(s==="rejected")showPayStat("rejected");else showToast("Still pending","info");});
+  firebase.firestore().collection("payments").doc(CUR_PAY_ID).get().then(function(d){
+    if(!d.exists)return;
+    var s=d.data().status;
+    if(s==="verified"){showPayStat("verified");}
+    else if(s==="rejected"){showPayStat("rejected");}
+    else{showToast("Still pending ⏳","info");}
+  });
 }
 
 var SHARE_EST_ID=null;
@@ -2985,10 +3047,21 @@ function aRenderPays(pays){
 function fPays(){var q=(G("payQ").value||"").toLowerCase(),f=G("payFlt").value;aRenderPays(AD.pays.filter(function(p){return(!q||(p.name||"").toLowerCase().includes(q)||(p.phone||"").includes(q)||(p.email||"").toLowerCase().includes(q))&&(f==="all"||p.status===f);}));}
 
 function aVerify(payId,uid){
-  if(!confirm("Verify?"))return;
-  firebase.firestore().collection("payments").doc(payId).update({status:"verified",verifiedAt:firebase.firestore.FieldValue.serverTimestamp()})
-    .then(function(){if(uid)firebase.firestore().collection("users").doc(uid).update({dlCount:firebase.firestore.FieldValue.increment(1)}).catch(function(){});showToast("Verified ✅","success");aLoadAll();})
-    .catch(function(e){showToast("Error: "+e.message,"error");});
+  if(!confirm("Verify payment? User will get +1 download."))return;
+  var db=firebase.firestore();
+  db.collection("payments").doc(payId).update({
+    status:"verified",
+    verifiedAt:firebase.firestore.FieldValue.serverTimestamp()
+  }).then(function(){
+    /* Give user +1 extra free download by increasing their freeLimit */
+    if(uid){
+      db.collection("users").doc(uid).update({
+        freeLimit:firebase.firestore.FieldValue.increment(1)
+      }).catch(function(){});
+    }
+    showToast("Verified ✅ — User gets +1 download","success");
+    aLoadAll();
+  }).catch(function(e){showToast("Error: "+e.message,"error");});
 }
 function aReject(payId){if(!confirm("Reject?"))return;firebase.firestore().collection("payments").doc(payId).update({status:"rejected",rejectedAt:firebase.firestore.FieldValue.serverTimestamp()}).then(function(){showToast("Rejected","warn");aLoadAll();}).catch(function(e){showToast("Error: "+e.message,"error");});}
 
