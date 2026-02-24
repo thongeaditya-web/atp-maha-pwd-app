@@ -3135,20 +3135,34 @@ function aRenderPays(pays){
 function fPays(){var q=(G("payQ").value||"").toLowerCase(),f=G("payFlt").value;aRenderPays(AD.pays.filter(function(p){return(!q||(p.name||"").toLowerCase().includes(q)||(p.phone||"").includes(q)||(p.email||"").toLowerCase().includes(q))&&(f==="all"||p.status===f);}));}
 
 function aVerify(payId,uid){
-  if(!confirm("Verify payment? User will get +1 download."))return;
+  var PAID_DL=5; /* downloads per payment — change as needed */
+  if(!confirm("Verify payment? User will get +"+PAID_DL+" downloads."))return;
   var db=firebase.firestore();
+  /* Step 1: mark payment verified */
   db.collection("payments").doc(payId).update({
     status:"verified",
     verifiedAt:firebase.firestore.FieldValue.serverTimestamp()
   }).then(function(){
-    /* Give user +1 extra free download by increasing their freeLimit */
-    if(uid){
+    if(!uid){showToast("Verified ✅","success");aLoadAll();return;}
+    /* Step 2: fetch user's current dlCount to set correct freeLimit */
+    db.collection("users").doc(uid).get().then(function(ud){
+      var curDL=ud.exists?(ud.data().dlCount||0):0;
+      var curLimit=ud.exists&&ud.data().freeLimit!=null?ud.data().freeLimit:FREE_LIMIT;
+      /* New limit = current limit + PAID_DL (so user can do PAID_DL more downloads) */
+      var newLimit=curLimit+PAID_DL;
       db.collection("users").doc(uid).update({
-        freeLimit:firebase.firestore.FieldValue.increment(1)
-      }).catch(function(){});
-    }
-    showToast("Verified ✅ — User gets +1 download","success");
-    aLoadAll();
+        freeLimit:newLimit
+      }).then(function(){
+        showToast("Verified ✅ — User gets +"+PAID_DL+" downloads (new limit: "+newLimit+")","success");
+        aLoadAll();
+      }).catch(function(e){showToast("Verified but limit update failed: "+e.message,"warn");aLoadAll();});
+    }).catch(function(){
+      /* Fallback: just increment */
+      db.collection("users").doc(uid).update({
+        freeLimit:firebase.firestore.FieldValue.increment(PAID_DL)
+      }).then(function(){showToast("Verified ✅ — User gets +"+PAID_DL+" downloads","success");aLoadAll();})
+      .catch(function(){showToast("Verified ✅","success");aLoadAll();});
+    });
   }).catch(function(e){showToast("Error: "+e.message,"error");});
 }
 function aReject(payId){if(!confirm("Reject?"))return;firebase.firestore().collection("payments").doc(payId).update({status:"rejected",rejectedAt:firebase.firestore.FieldValue.serverTimestamp()}).then(function(){showToast("Rejected","warn");aLoadAll();}).catch(function(e){showToast("Error: "+e.message,"error");});}
@@ -3852,20 +3866,34 @@ function aRenderPays(pays){
 function fPays(){var q=(G("payQ").value||"").toLowerCase(),f=G("payFlt").value;aRenderPays(AD.pays.filter(function(p){return(!q||(p.name||"").toLowerCase().includes(q)||(p.phone||"").includes(q)||(p.email||"").toLowerCase().includes(q))&&(f==="all"||p.status===f);}));}
 
 function aVerify(payId,uid){
-  if(!confirm("Verify payment? User will get +1 download."))return;
+  var PAID_DL=5; /* downloads per payment — change as needed */
+  if(!confirm("Verify payment? User will get +"+PAID_DL+" downloads."))return;
   var db=firebase.firestore();
+  /* Step 1: mark payment verified */
   db.collection("payments").doc(payId).update({
     status:"verified",
     verifiedAt:firebase.firestore.FieldValue.serverTimestamp()
   }).then(function(){
-    /* Give user +1 extra free download by increasing their freeLimit */
-    if(uid){
+    if(!uid){showToast("Verified ✅","success");aLoadAll();return;}
+    /* Step 2: fetch user's current dlCount to set correct freeLimit */
+    db.collection("users").doc(uid).get().then(function(ud){
+      var curDL=ud.exists?(ud.data().dlCount||0):0;
+      var curLimit=ud.exists&&ud.data().freeLimit!=null?ud.data().freeLimit:FREE_LIMIT;
+      /* New limit = current limit + PAID_DL (so user can do PAID_DL more downloads) */
+      var newLimit=curLimit+PAID_DL;
       db.collection("users").doc(uid).update({
-        freeLimit:firebase.firestore.FieldValue.increment(1)
-      }).catch(function(){});
-    }
-    showToast("Verified ✅ — User gets +1 download","success");
-    aLoadAll();
+        freeLimit:newLimit
+      }).then(function(){
+        showToast("Verified ✅ — User gets +"+PAID_DL+" downloads (new limit: "+newLimit+")","success");
+        aLoadAll();
+      }).catch(function(e){showToast("Verified but limit update failed: "+e.message,"warn");aLoadAll();});
+    }).catch(function(){
+      /* Fallback: just increment */
+      db.collection("users").doc(uid).update({
+        freeLimit:firebase.firestore.FieldValue.increment(PAID_DL)
+      }).then(function(){showToast("Verified ✅ — User gets +"+PAID_DL+" downloads","success");aLoadAll();})
+      .catch(function(){showToast("Verified ✅","success");aLoadAll();});
+    });
   }).catch(function(e){showToast("Error: "+e.message,"error");});
 }
 function aReject(payId){if(!confirm("Reject?"))return;firebase.firestore().collection("payments").doc(payId).update({status:"rejected",rejectedAt:firebase.firestore.FieldValue.serverTimestamp()}).then(function(){showToast("Rejected","warn");aLoadAll();}).catch(function(e){showToast("Error: "+e.message,"error");});}
