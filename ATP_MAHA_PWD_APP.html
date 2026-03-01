@@ -597,7 +597,7 @@ tr:hover td{background:#fdf8f3}
 <div class="asearch"><span>🔍</span><input id="estQ" placeholder="Search..." oninput="fEsts()"></div>
 <button class="xbtn xbl" onclick="aLoadAll()">🔄</button>
 </div><div style="overflow-x:auto"><table>
-<thead><tr><th>Name of Work</th><th>Owner</th><th>Items</th><th>Amount</th><th>Date</th></tr></thead>
+<thead><tr><th>Name of Work</th><th>Owner</th><th>Items</th><th>Amount</th><th>Date</th><th>View</th></tr></thead>
 <tbody id="estTbody"><tr><td colspan="5"><div class="aloading"><span class="spin2"></span></div></td></tr></tbody>
 </table></div></div></div>
 <div id="asec-settings" style="display:none">
@@ -1026,9 +1026,9 @@ ii) Water Absorption</td><td style="font-size:.57rem">One test for 50,000 blocks
 <div style="background:#fff8e1;border:1px solid #f5a623;border-radius:8px;padding:1rem;margin-bottom:1rem">
   <div style="font-weight:900;font-size:.8rem;color:#e65100;margin-bottom:.5rem">🏗️ ATP's Maha PWD Estimate App</div>
   <div style="font-size:.68rem;color:#555;line-height:1.8">
-    <div>&#128247; <strong>Email:</strong> thongeaditya&#64;gmail.com</div>
+    <div>&#128247; <strong>Email:</strong> thongeaditya@gmail.com</div>
     <div>&#128241; <strong>Mobile / WhatsApp:</strong> 8975962565</div>
-    <div>&#128179; <strong>UPI:</strong> adityathonge&#64;ybl</div>
+    <div>&#128179; <strong>UPI:</strong> adityathonge@ybl</div>
     <div>🌐 <strong>App:</strong> Maharashtra PWD SSR 2022-23</div>
   </div>
 </div>
@@ -3111,6 +3111,7 @@ upMeta();
 <script>
 
 
+
 /* ATP MAHA PWD v35 */
 var FBCFG={apiKey:"AIzaSyCdH-k3hH1mYYcND0cBf7J2pLRG6xQydrU",authDomain:"atp-maha-pwd.firebaseapp.com",projectId:"atp-maha-pwd",storageBucket:"atp-maha-pwd.firebasestorage.app",messagingSenderId:"382409286731",appId:"1:382409286731:web:37daae9842bc3687bf99ce"};
 var ADMIN_EMAIL="thongeaditya@gmail.com",UPI_ID="adityathonge@ybl",UPI_NAME="ATP MAHA PWD";
@@ -3487,7 +3488,7 @@ function cloudSave(){
   var data={uid:CU.uid,name:nm,items:typeof items!=="undefined"?items:[],
     cover:{pReg:(G("pReg")||{value:""}).value,pCir:(G("pCir")||{value:""}).value,pDiv:(G("pDiv")||{value:""}).value,pSub:(G("pSub")||{value:""}).value,pName:(G("pName")||{value:""}).value},
     settings:{gst:pfN("sGST"),cont:pfN("sCont"),li:pfN("sLI"),royS:pfN("sRS"),royC:pfN("sRC")},
-    grand:typeof calcGrand==="function"?calcGrand():0,updatedAt:firebase.firestore.FieldValue.serverTimestamp()};
+    grand:typeof calcGrand==="function"?calcGrand():0,isPublic:true,updatedAt:firebase.firestore.FieldValue.serverTimestamp()};
   var prm;
   if(CUR_EST_ID)prm=db.collection("estimates").doc(CUR_EST_ID).update(data);
   else{data.createdAt=firebase.firestore.FieldValue.serverTimestamp();data.collaborators=[];prm=db.collection("estimates").add(data).then(function(r){CUR_EST_ID=r.id;});}
@@ -3701,7 +3702,7 @@ function aViewEst(estId){
   }
   h+="</div>";
   G("pdBody").innerHTML=h;
-  if(G("pdHead"))G("pdHead").innerHTML="Estimate Details";
+  if(G("pdHead"))G("pdHead").innerHTML="Estimate: "+esc(est.name||"Untitled")+"<button class='xbtn xbl' style='margin-left:.5rem;font-size:.65rem' onclick='aLoadEst(\""+estId+"\")'>&#8681; Load in App</button>";
   var modal=G("payDetailModal");
   if(modal)modal.style.display="flex";
 }
@@ -3726,6 +3727,31 @@ function aRenderRev(){
     "</div><div style='font-size:.63rem;font-weight:800;color:#555;margin-bottom:.3rem'>Verified Payments:</div>" +
     (rows||"<div style='color:#aaa;font-size:.63rem;font-style:italic'>No verified payments yet</div>");
 }
+function aLoadEst(estId){
+  if(!window.firebase||!firebase.firestore){showToast("Offline","warn");return;}
+  firebase.firestore().collection("estimates").doc(estId).get().then(function(d){
+    if(!d.exists){showToast("Estimate not found","warn");return;}
+    var data=d.data();
+    /* Load items into app */
+    if(typeof items!=="undefined"&&data.items){
+      items=data.items;
+      if(typeof renderAll==="function")renderAll();
+      if(typeof upMeta==="function")upMeta();
+    }
+    /* Load cover data */
+    if(data.cover){
+      ["pReg","pCir","pDiv","pSub","pName"].forEach(function(k){
+        var el=G(k);if(el&&data.cover[k])el.value=data.cover[k];
+      });
+    }
+    CUR_EST_ID=estId;
+    /* Close admin, go to app */
+    var adminEl=G("adminShell");if(adminEl)adminEl.style.display="none";
+    var modal=G("payDetailModal");if(modal)modal.style.display="none";
+    showToast("Estimate loaded: "+esc(data.name||"Untitled"),"success");
+  }).catch(function(e){showToast("Error: "+e.message,"error");});
+}
+
 function aDelPay(payId){
   if(!confirm("Delete this payment record?"))return;
   firebase.firestore().collection("payments").doc(payId).delete()
@@ -4542,26 +4568,25 @@ function loadBrowse(){
     list.innerHTML="<div style='color:#aaa;font-style:italic;text-align:center;padding:1rem'>Please login to browse estimates</div>";
     return;
   }
-  list.innerHTML="<div style='text-align:center;padding:1rem;color:#888'><span class='spin2'></span> Loading...</div>";
-  /* Load recent estimates from ALL users (no isPublic filter) */
+  list.innerHTML="<div style='text-align:center;padding:1rem;color:#888'>Loading...</div>";
   firebase.firestore().collection("estimates")
-    .orderBy("updatedAt","desc").limit(50).get()
+    .orderBy("updatedAt","desc").limit(100).get()
     .then(function(snap){
-      BROWSE_ALL=[];
+      var all=[];
       snap.forEach(function(d){
-        var dd=d.data();
-        /* Show all estimates including own — filter own if needed */
-        BROWSE_ALL.push({id:d.id,d:dd});
+        all.push({id:d.id,d:d.data()});
       });
+      /* Show ALL estimates including own — user can see everyone's work */
+      BROWSE_ALL=all;
       renderBrowse(BROWSE_ALL);
     })
     .catch(function(e){
-      list.innerHTML="<div style='color:#c00;padding:1rem;font-size:.65rem'>Error loading: "+e.message+"</div>";
+      list.innerHTML="<div style='color:#c00;padding:1rem;font-size:.65rem'>Error: "+e.message+"</div>";
     });
 }
 function renderBrowse(list){
   var el=G("browseList");if(!el)return;
-  if(!list.length){el.innerHTML="<div style='color:#aaa;font-style:italic;padding:1rem 0'>No public estimates found</div>";return;}
+  if(!list.length){el.innerHTML="<div style='color:#aaa;font-style:italic;padding:1rem 0'>No estimates found. Try refreshing.</div>";return;}
   el.innerHTML=list.map(function(item){
     var d=item.d,id=item.id;
     var dt=d.updatedAt?new Date(d.updatedAt.seconds*1000).toLocaleDateString("en-IN"):"—";
@@ -4617,6 +4642,7 @@ function sendContact(){
     showE("ctErr","Error: "+e.message);
   });
 }
+
 
 
 </script>
