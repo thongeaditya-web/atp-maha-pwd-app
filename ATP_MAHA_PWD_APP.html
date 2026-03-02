@@ -185,7 +185,6 @@ tr:hover td{background:#fdf8f3}
 .emp p{font-size:.61rem;line-height:1.4}
 /* PRINT */
 @page{margin:1.2cm;size:A4}
-.lc-row-zero{display:none!important}
 @media print{
   .noprt,nav,.tabs,.sw,.rh,.rb,.af,.fa,.bar,.dbt,.side,
   .km-in,.lead-note,.cta,.btn,button,.sh,
@@ -208,8 +207,16 @@ tr:hover td{background:#fdf8f3}
   thead{display:table-header-group}
   .cover{border:none!important;max-width:100%!important}
   .km-print{display:inline!important;font-weight:700;font-size:.78rem}
-  .lc-row-zero{display:none!important}
+  
   .steel-section-zero{display:none!important}
+
+  .sc-sec.sc-zero{display:none!important}
+  #p9 .sh{display:none!important}
+  #p9 .pth{display:block!important}
+  #p9 .sc-in{border:none!important;background:transparent!important;font-weight:700;font-family:monospace}
+  .mtf-zero{display:none!important}
+  .lct tr{display:table-row!important}
+  .lct td{padding:.3rem!important}
 }
 .pth{display:none;margin-bottom:.5rem;padding-bottom:.32rem;border-bottom:1px solid #ccc}
 .pth-work{font-size:.6rem;color:#999;font-weight:400}
@@ -230,24 +237,6 @@ tr:hover td{background:#fdf8f3}
   border-radius:3px;font-size:.65rem;font-weight:900}
 .noprt{} /* toggled in print */
 .prtonly{display:none}
-@media print{
-  .noprt{display:none!important}
-  .prtonly{display:block!important}
-  .sc-sec.sc-zero{display:none!important}
-  #p9{display:block!important;page-break-before:always}
-  #p9 .sh{display:none!important}
-  #p9 .pth{display:block!important}
-  #p9 .sc-in{border:none!important;background:transparent!important;
-    font-weight:700;font-family:monospace}
-  .panel{display:block!important}
-  .mtf-zero{display:none!important}
-  #p12{display:block!important;page-break-before:always}
-  #p12 .sh{display:block!important}
-  #p12 svg{display:block;margin:0 auto;width:1000px;height:600px;max-width:100%}
-  .lc-row-zero{display:none!important}
-  .lct tr{display:table-row!important}
-  .lct td{padding:.3rem!important}
-}
 .lct td{padding:.38rem .3rem!important}
 .lct th{padding:.3rem!important}
 
