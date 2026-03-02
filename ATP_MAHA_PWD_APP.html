@@ -901,19 +901,51 @@ ii) Water Absorption</td><td style="font-size:.57rem">One test for 50,000 blocks
 
 </div>
 
-<div class="panel noprt" id="p14"><div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;padding-bottom:.4rem;border-bottom:2px solid var(--or)"><span style="font-size:1.2rem">&#128101;</span><h2 style="margin:0;font-size:.9rem;font-weight:800;color:var(--or)">Browse Estimates</h2></div>
-<div style="max-width:700px;margin:0 auto;padding:0 .5rem .5rem">
-<div style="background:#e3f2fd;border-left:4px solid #1565c0;padding:.5rem .7rem;margin-bottom:.6rem;font-size:.65rem;color:#1a237e;border-radius:0 4px 4px 0">Browse estimates saved by all users. Click Refresh to load.</div>
-<div style="display:flex;gap:.5rem;margin-bottom:.6rem;align-items:center"><input type="text" id="browseQ" placeholder="Search by name or division..." style="flex:1;font-size:.68rem;padding:.32rem .5rem;border:1px solid #ddd;border-radius:4px;font-family:inherit" oninput="browseSearch()"><button class="btn bg" onclick="loadBrowse()" style="white-space:nowrap;flex-shrink:0">&#128260; Refresh</button></div>
-<div id="browseList" style="font-size:.68rem;min-height:60px"><div style="color:#aaa;font-style:italic;padding:1rem 0;text-align:center">Click Refresh to load estimates</div></div>
-</div></div>
+<div class="panel noprt" id="p14">
+  <div class="pth noprt"><span class="pth-work"></span></div>
+  <div style="max-width:700px;margin:0 auto">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem;padding-bottom:.4rem;border-bottom:2px solid var(--or)">
+      <span style="font-size:.85rem;font-weight:800;color:var(--or)">&#128101; Browse Estimates</span>
+      <button class="btn bg" style="font-size:.6rem;padding:.25rem .55rem" onclick="loadBrowse()">&#128260; Refresh</button>
+    </div>
+    <input type="text" id="browseQ" placeholder="Search by name or division..." oninput="browseSearch()"
+      style="width:100%;font-size:.68rem;padding:.32rem .5rem;border:1px solid var(--bd);border-radius:6px;font-family:inherit;margin-bottom:.5rem;box-sizing:border-box">
+    <div id="browseList" style="font-size:.68rem">
+      <div style="color:var(--mu);font-style:italic;padding:1rem;text-align:center">Click Refresh to load</div>
+    </div>
+  </div>
+</div>
 
-<div class="panel noprt" id="p15"><div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;padding-bottom:.4rem;border-bottom:2px solid var(--or)"><span style="font-size:1.2rem">&#128222;</span><h2 style="margin:0;font-size:.9rem;font-weight:800;color:var(--or)">Contact Us</h2></div>
-<div style="max-width:480px;margin:0 auto;padding:0 .5rem .5rem">
-<div style="background:#fff8e1;border:1px solid #f5a623;border-radius:8px;padding:.9rem 1rem;margin-bottom:.8rem"><div style="font-weight:900;font-size:.8rem;color:#e65100;margin-bottom:.5rem">&#127959; ATP Maha PWD Estimate App</div><div style="font-size:.72rem;color:#333;line-height:2.2"><div>&#128231; <strong>Email:</strong> thongeaditya@gmail.com</div><div>&#128241; <strong>Mobile / WhatsApp:</strong> 8975962565</div><div>&#128179; <strong>UPI:</strong> adityathonge@ybl</div></div></div>
-<div style="background:#f0f4ff;border:1px solid #c5cae9;border-radius:8px;padding:.8rem 1rem;margin-bottom:.8rem;font-size:.68rem;color:#283593;line-height:1.9"><div style="font-weight:800;margin-bottom:.3rem">&#10067; Common Questions</div><div><b>Downloads not working?</b> Logout and login again.</div><div><b>Free downloads?</b> 5 free, then Rs.5 = 5 more.</div><div><b>Browse empty?</b> Save an estimate first.</div></div>
-<div style="background:#fff;border:1px solid #e0ddd8;border-radius:8px;padding:.8rem 1rem"><div style="font-weight:800;font-size:.75rem;margin-bottom:.5rem">&#128228; Send Message</div><div id="ctOK" style="display:none;background:#e8f5e9;color:#2e7d32;padding:.4rem .6rem;border-radius:4px;font-size:.65rem;margin-bottom:.4rem">&#10003; Sent!</div><input id="ctName" placeholder="Your Name" style="width:100%;margin-bottom:.35rem;padding:.32rem .45rem;border:1px solid #ddd;border-radius:4px;font-size:.68rem;font-family:inherit"><input id="ctSubj" placeholder="Subject" style="width:100%;margin-bottom:.35rem;padding:.32rem .45rem;border:1px solid #ddd;border-radius:4px;font-size:.68rem;font-family:inherit"><textarea id="ctMsg" placeholder="Your message..." rows="3" style="width:100%;margin-bottom:.35rem;padding:.32rem .45rem;border:1px solid #ddd;border-radius:4px;font-size:.68rem;font-family:inherit;resize:vertical"></textarea><div id="ctErr" style="color:#c00;font-size:.62rem;min-height:.8rem;margin-bottom:.3rem"></div><button class="btn bg" style="width:100%" onclick="sendContact()">&#128228; Send Message</button></div>
-</div></div>
+
+<div class="panel noprt" id="p15">
+  <div style="max-width:480px;margin:0 auto">
+    <div style="font-size:.85rem;font-weight:800;color:var(--or);margin-bottom:.7rem;padding-bottom:.4rem;border-bottom:2px solid var(--or)">&#128222; Contact Us</div>
+    <div style="background:#fff8e1;border:1px solid #f5a623;border-radius:8px;padding:.8rem 1rem;margin-bottom:.7rem">
+      <div style="font-weight:900;font-size:.78rem;color:#e65100;margin-bottom:.4rem">&#127959; ATP Maha PWD Estimate App</div>
+      <div style="font-size:.71rem;color:#333;line-height:2.1">
+        <div>&#128231; <b>Email:</b> thongeaditya@gmail.com</div>
+        <div>&#128241; <b>Mobile / WhatsApp:</b> 8975962565</div>
+        <div>&#128179; <b>UPI:</b> adityathonge@ybl</div>
+      </div>
+    </div>
+    <div style="background:#f0f4ff;border:1px solid #c5cae9;border-radius:8px;padding:.7rem 1rem;margin-bottom:.7rem;font-size:.67rem;color:#283593;line-height:1.9">
+      <div style="font-weight:800;margin-bottom:.3rem">&#10067; Common Questions</div>
+      <div><b>Downloads not working?</b> Logout and login again.</div>
+      <div><b>Free downloads?</b> 5 free, then Rs.5 = 5 more.</div>
+      <div><b>Browse empty?</b> Save an estimate first, then Refresh.</div>
+    </div>
+    <div style="background:#fff;border:1px solid var(--bd);border-radius:8px;padding:.8rem 1rem">
+      <div style="font-weight:800;font-size:.74rem;margin-bottom:.5rem">&#128228; Send Message</div>
+      <div id="ctOK" style="display:none;background:#e8f5e9;color:#2e7d32;padding:.35rem .6rem;border-radius:4px;font-size:.65rem;margin-bottom:.4rem">&#10003; Message sent!</div>
+      <div id="ctErr" class="lerr"></div>
+      <input id="ctName" placeholder="Your Name" style="width:100%;margin-bottom:.32rem;padding:.32rem .45rem;border:1px solid var(--bd);border-radius:4px;font-size:.67rem;font-family:inherit;box-sizing:border-box">
+      <input id="ctSubj" placeholder="Subject" style="width:100%;margin-bottom:.32rem;padding:.32rem .45rem;border:1px solid var(--bd);border-radius:4px;font-size:.67rem;font-family:inherit;box-sizing:border-box">
+      <textarea id="ctMsg" rows="3" placeholder="Your message..." style="width:100%;margin-bottom:.32rem;padding:.32rem .45rem;border:1px solid var(--bd);border-radius:4px;font-size:.67rem;font-family:inherit;resize:vertical;box-sizing:border-box"></textarea>
+      <button class="btn bg" style="width:100%;font-size:.7rem" onclick="sendContact()">&#9993; Send Message</button>
+    </div>
+  </div>
+</div>
+
 
 </div><!-- /appShell -->
 
@@ -2340,7 +2372,7 @@ function goTab(n){
   if(n===9&&typeof scRender==='function')scRender();
   if(n===12&&typeof drawLeadDiagram==='function')drawLeadDiagram();
   if(n===13)rCFTab();
-  if(n===14&&typeof loadBrowse==="function"){loadBrowse();setTimeout(function(){var m=document.querySelector(".main");if(m)m.scrollTop=0;},150);}
+  if(n===14&&typeof loadBrowse==="function")loadBrowse();
   var i,p,t;
   for(i=0;i<=15;i++){
     p=R('p'+i);if(p)p.classList.toggle('on',i===n);
@@ -3840,32 +3872,17 @@ var BROWSE_ALL=[];
 function loadBrowse(){
   var list=G("browseList");if(!list)return;
   if(!CU||!window.firebase||!firebase.firestore){
-    list.innerHTML="<div style='color:#aaa;padding:.5rem'>Login to browse estimates</div>";return;
+    list.innerHTML="<div style='color:var(--mu);padding:.8rem;text-align:center'>Please login to browse estimates</div>";return;
   }
-  list.innerHTML="<div style='color:#aaa;padding:.5rem'>Loading...</div>";
+  list.innerHTML="<div style='color:var(--mu);padding:.8rem;text-align:center'>Loading...</div>";
+  BROWSE_ALL=[];
   firebase.firestore().collection("estimates")
     .orderBy("updatedAt","desc").limit(50).get()
     .then(function(snap){
-      var all=[];
-      snap.forEach(function(d){if(d.data().uid!==CU.uid)all.push({id:d.id,d:d.data()});});
-      if(!all.length){
-        list.innerHTML="<div style='color:#aaa;font-style:italic;padding:.8rem;text-align:center'>No estimates from other users yet</div>";
-        return;
-      }
-      list.innerHTML=all.map(function(item){
-        var d=item.d;
-        var dt=d.updatedAt?new Date(d.updatedAt.seconds*1000).toLocaleDateString("en-IN"):"";
-        var amt=d.grand?"Rs."+fmtN(d.grand):"";
-        var loc=d.cover&&d.cover.pDiv?d.cover.pDiv:"";
-        return "<div style='background:#fff;border:1px solid #e0ddd8;border-radius:6px;padding:.55rem .7rem;margin-bottom:.5rem'>" +
-          "<div style='display:flex;align-items:flex-start;gap:.5rem'>" +
-          "<div style='flex:1'><div style='font-weight:800;font-size:.72rem'>" + esc(d.name||"Untitled") + "</div>" +
-          "<div style='font-size:.6rem;color:#888;margin-top:.1rem'>" +
-          (loc?"Loc: "+esc(loc)+" | ":"")+(amt?amt+" | ":" ")+(dt?dt:"")+"</div></div>" +
-          "<button class='btn bp' style='font-size:.6rem;padding:.2rem .4rem;flex-shrink:0' " +
-          "data-eid='"+item.id+"' data-enm='"+esc(d.name||"Estimate")+"' onclick='requestEst(this.dataset.eid,this.dataset.enm)'>Request</button>" +
-          "</div></div>";
-      }).join("");
+      snap.forEach(function(d){
+        if(d.data().uid!==CU.uid)BROWSE_ALL.push({id:d.id,d:d.data()});
+      });
+      renderBrowse(BROWSE_ALL);
     }).catch(function(e){
       list.innerHTML="<div style='color:#c00;padding:.5rem'>Error: "+e.message+"</div>";
     });
@@ -4639,8 +4656,15 @@ function renderBrowse(arr){
   }).join("");
 }
 function browseSearch(){
-  var q=(G("browseQ").value||"").toLowerCase();
-  renderBrowse(q?BROWSE_ALL.filter(function(x){return(x.d.name||"").toLowerCase().includes(q);}):BROWSE_ALL);
+  var q=(G("browseQ").value||"").toLowerCase().trim();
+  var list=G("browseList");if(!list)return;
+  if(!BROWSE_ALL||!BROWSE_ALL.length)return;
+  var filtered=q?BROWSE_ALL.filter(function(x){
+    var nm=(x.d.name||"").toLowerCase();
+    var dv=(x.d.cover&&x.d.cover.pDiv?x.d.cover.pDiv:"").toLowerCase();
+    return nm.includes(q)||dv.includes(q);
+  }):BROWSE_ALL;
+  renderBrowse(filtered);
 }
 function requestEst(estId,estName){
   if(!CU){showToast("Login first","warn");return;}
