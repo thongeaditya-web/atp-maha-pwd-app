@@ -1040,53 +1040,7 @@ ii) Water Absorption</td><td style="font-size:.57rem">One test for 50,000 blocks
     <div id="cfEditorBody" style="padding:1rem"></div>
   </div>
 <div style="margin-top:2.5rem;padding:1.5rem;background:#fff;border:1px solid #999;border-radius:4px;page-break-inside:avoid"><div style="text-align:center;font-weight:700;font-size:.88rem;margin-bottom:1rem;text-decoration:underline;letter-spacing:.3px">CERTIFICATE</div><div style="font-size:.7rem;line-height:1.9;padding-left:1rem"><div style="margin-bottom:.5rem">1. Certified that the nearest quarry for materials is considered while framing the estimate.</div><div style="margin-bottom:.5rem">2. Certified that sufficient materials are available in the quarry.</div><div style="margin-bottom:.5rem">3. Certified that material available in the quarry is of good quality.</div></div></div><div style="margin-top:2rem;padding:1.5rem 3rem;border-top:1px solid #999;page-break-inside:avoid"><div style="display:flex;justify-content:space-between"><div style="text-align:left;flex:1"><div style="font-size:.72rem;line-height:1.8;font-style:italic"><div><span class="stmp-se">Section Engineer</span>,</div><div class="stmp-loc">P.W. Sub Division</div></div></div><div style="text-align:right;flex:1"><div style="font-size:.72rem;line-height:1.8;font-style:italic"><div><span class="stmp-sde">Sub Divisional Engineer</span>,</div><div class="stmp-loc">P.W. Sub Division</div></div></div></div></div>
-<div class="panel noprt" id="p13">
-<div class="sh"><div class="n">👥</div><h2>Browse Estimates</h2></div>
-<div class="pth"><div class="pth-work"></div><div class="pth-sheet">Community Estimates</div></div>
-<div style="background:#e3f2fd;border-left:4px solid #1565c0;padding:.5rem .7rem;margin-bottom:.8rem;font-size:.65rem;color:#1a237e">
-  <strong>👥 Browse estimates shared by other users.</strong> You can request a copy from the owner.
-</div>
-<div style="display:flex;gap:.5rem;margin-bottom:.6rem;flex-wrap:wrap">
-  <input type="text" id="browseQ" placeholder="Search by name..." style="flex:1;min-width:120px;font-size:.68rem;padding:.3rem .5rem;border:1px solid #ddd;border-radius:4px" oninput="browseSearch()">
-  <button class="btn bp" onclick="loadBrowse()">🔄 Refresh</button>
-</div>
-<div id="browseList" style="font-size:.68rem;color:#aaa;font-style:italic;padding:.5rem 0">Loading...</div>
-</div>
 
-<div class="panel noprt" id="p14">
-<div class="sh"><div class="n">📞</div><h2>Contact Us</h2></div>
-<div class="pth"><div class="pth-work"></div><div class="pth-sheet">Help & Support</div></div>
-<div style="max-width:480px;margin:0 auto">
-<div style="background:#fff8e1;border:1px solid #f5a623;border-radius:8px;padding:1rem;margin-bottom:1rem">
-  <div style="font-weight:900;font-size:.8rem;color:#e65100;margin-bottom:.5rem">🏗️ ATP's Maha PWD Estimate App</div>
-  <div style="font-size:.68rem;color:#555;line-height:1.8">
-    <div>&#128247; <strong>Email:</strong> thongeaditya&#64;gmail.com</div>
-    <div>&#128241; <strong>Mobile / WhatsApp:</strong> 8975962565</div>
-    <div>&#128179; <strong>UPI:</strong> adityathonge&#64;ybl</div>
-    <div>🌐 <strong>App:</strong> Maharashtra PWD SSR 2022-23</div>
-  </div>
-</div>
-<div style="background:#f8f6f2;border-radius:8px;padding:1rem;margin-bottom:1rem">
-  <div style="font-weight:800;font-size:.75rem;color:#18150f;margin-bottom:.6rem">❓ Frequently Asked Questions</div>
-  <div style="font-size:.65rem;color:#444;line-height:2">
-    <div style="border-bottom:1px solid #ddd;padding-bottom:.4rem;margin-bottom:.4rem"><strong>Q: किती free downloads आहेत?</strong><br>A: प्रत्येक user ला 5 free downloads आहेत.</div>
-    <div style="border-bottom:1px solid #ddd;padding-bottom:.4rem;margin-bottom:.4rem"><strong>Q: Payment कशी करायची?</strong><br>A: Print/Download button दाबल्यावर QR code scan करा, screenshot upload करा.</div>
-    <div style="border-bottom:1px solid #ddd;padding-bottom:.4rem;margin-bottom:.4rem"><strong>Q: Payment verify कधी होते?</strong><br>A: Admin 15 मिनिटांत verify करतो किंवा auto-approve होतो.</div>
-    <div style="border-bottom:1px solid #ddd;padding-bottom:.4rem;margin-bottom:.4rem"><strong>Q: Data save होतो का?</strong><br>A: हो, Settings tab मध्ये Cloud Save button आहे.</div>
-    <div><strong>Q: Technical problem आली तर?</strong><br>A: खाली form fill करा किंवा email करा.</div>
-  </div>
-</div>
-<div style="background:#fff;border:1px solid #ddd;border-radius:8px;padding:1rem">
-  <div style="font-weight:800;font-size:.75rem;color:#18150f;margin-bottom:.6rem">📝 Send Message to Admin</div>
-  <div style="margin-bottom:.4rem"><input type="text" id="ctName" placeholder="Your Name" style="width:100%;font-size:.68rem;padding:.35rem .5rem;border:1px solid #ddd;border-radius:4px;box-sizing:border-box"></div>
-  <div style="margin-bottom:.4rem"><input type="text" id="ctSubj" placeholder="Subject (e.g. Payment issue, Bug report)" style="width:100%;font-size:.68rem;padding:.35rem .5rem;border:1px solid #ddd;border-radius:4px;box-sizing:border-box"></div>
-  <div style="margin-bottom:.6rem"><textarea id="ctMsg" rows="3" placeholder="Describe your issue..." style="width:100%;font-size:.68rem;padding:.35rem .5rem;border:1px solid #ddd;border-radius:4px;resize:vertical;box-sizing:border-box"></textarea></div>
-  <button class="btn bg" style="width:100%;font-size:.72rem" onclick="sendContact()">📤 Send Message</button>
-  <div id="ctErr" style="display:none;color:red;font-size:.63rem;margin-top:.3rem"></div>
-  <div id="ctOK" style="display:none;color:green;font-size:.63rem;margin-top:.3rem">✅ Message sent! Admin will respond via email.</div>
-</div>
-</div>
-</div>
 </div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
@@ -3950,9 +3904,7 @@ function sendContact(){
     showE("ctErr","Error: "+e.message);
   });
 }function printAll(){
-  /* Check download limit */
-  if(typeof canDownload==="function"&&!canDownload())return;
-  /* Count download if logged in and not pro */
+  /* Non-blocking: count download if logged in, but always allow print */
   if(typeof CU!=="undefined"&&CU&&typeof IS_PRO!=="undefined"&&!IS_PRO){
     DL_COUNT++;
     if(typeof renderHeader==="function")renderHeader();
@@ -3982,7 +3934,7 @@ function sendContact(){
     if(!p.classList.contains("noprt")){p.classList.add("on");p.style.pageBreakAfter="always";}
   });
   if(typeof drawLeadDiagram==="function"){try{drawLeadDiagram();}catch(e){}}
-  setTimeout(function(){window.print();},500);
+  setTimeout(function(){window.print();},300);
   setTimeout(function(){
     document.querySelectorAll(".panel").forEach(function(p){p.classList.remove("on");p.style.pageBreakAfter="";});
     document.querySelectorAll(".tab").forEach(function(t){t.classList.remove("on");});
