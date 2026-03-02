@@ -29,8 +29,7 @@ nav{background:#18150f;color:#fff;padding:.5rem .9rem;display:flex;align-items:c
   border-radius:9px;font-size:.5rem;min-width:13px;height:13px;padding:0 3px;margin-left:2px}
 .lay{display:grid;grid-template-columns:1fr 255px;min-height:calc(100vh - 78px)}
 .main{padding:.72rem;overflow-y:auto}
-.side{padding:.72rem;background:#faf7f3;border-left:1px solid var(--bd);
-  overflow-y:auto;max-height:calc(100vh - 78px);position:sticky;top:78px}
+
 .panel{display:none}.panel.on{display:block}
 .sh{display:flex;align-items:center;gap:.3rem;margin-bottom:.62rem}
 .sh .n{width:16px;height:16px;border-radius:50%;background:var(--or);color:#fff;
@@ -810,8 +809,6 @@ ii) Water Absorption</td><td style="font-size:.57rem">One test for 50,000 blocks
   <button class="btn bs" onclick="editMTFCost()">Update Cost</button>
 </div>
 </div>
-
-<div class="side"><div class="emp" id="empS" style="display: none;"><div class="ico">📌</div><p>Step 1: Set km in <b>Lead Chart</b>.<br>Step 2: <b>Search</b> items to add.</p></div><div id="sumPanel" style="display: block;"><div class="sc"><h3>Abstract</h3><div id="absRows"><div class="sr" style="font-size:.64rem"><span><b style="color:var(--or)">3.4</b> 8.00 One Cubic Metre</span><span class="sv">₹60,323.2</span></div><div class="sr" style="font-size:.64rem"><span><b style="color:var(--or)">25.11</b> 8.00 One Cubic Metre</span><span class="sv">₹58,756.24</span></div><div class="sr" style="font-size:.64rem"><span><b style="color:var(--or)">8.32</b> 8.00 One Square Meter</span><span class="sv">₹7,376.24</span></div><div class="sr" style="font-size:.64rem"><span><b style="color:var(--or)">22.01</b> 8.00 One Running Metre</span><span class="sv">₹6,823.36</span></div><div class="sr" style="font-size:.64rem"><span><b style="color:var(--or)">27.01</b> 8.00 One Cubic Metre</span><span class="sv">₹64,232.8</span></div><div class="sr" style="font-size:.64rem"><span><b style="color:var(--or)">28.01</b> 8.00 One Cubic Metre</span><span class="sv">₹42,877.12</span></div></div><div class="sr tot"><span>Cost of Work</span><span class="sv" id="sA">₹2.40 L</span></div></div><div class="sc"><h3>General Abstract</h3><div class="sr"><span>A. Cost</span><span class="sv" id="gaA">₹2.40 L</span></div><div class="sr"><span class="sl">B. Royalty</span><span class="sv" id="gaB">₹2,385</span></div><div class="sr" style="border-top:1px dashed var(--bd);padding-top:.14rem"><span>A+B</span><span class="sv" id="gaAB">₹2.43 L</span></div><div class="sr"><span class="sl" id="lGST">+ GST 18%</span><span class="sv" id="gaGST">₹43,699</span></div><div class="sr"><span class="sl" id="lCont">+ Cont. 2%</span><span class="sv" id="gaCont">₹4,855</span></div><div class="sr"><span class="sl" id="lLI">+ Labour 1%</span><span class="sv" id="gaLI">₹2,428</span></div><div class="sr" id="gaFRow" style="display:none;background:#fff8e1"><span class="sl" id="lF" style="color:#e65100">+ Area %</span><span class="sv" id="gaF" style="color:#e65100;font-weight:700">₹0</span></div><div class="sr grand"><span>Grand Total</span><span class="sv" id="gaGrand">₹2.94 L</span></div><div class="lk" id="gaLk">= 2.938 Lakhs</div></div><div style="display:flex;gap:.24rem;margin-top:.38rem"><button class="btn bp" onclick="goTab(2)" style="flex:1;font-size:.56rem">+ Items</button><button class="btn bg" onclick="goTab(8)" style="flex:1;font-size:.56rem">General Abstract</button></div></div></div>
 
 <div class="panel on" id="p13" style="">
 <div class="sh"><div class="n">13</div><h2>⚙️ CF Table — Consumption Factors</h2></div>
@@ -2368,7 +2365,6 @@ function rSum(){
 
 /* ── NAVIGATION ──────────────────────────────────────────────────────── */
 function goTab(n){
-  if(n===0){document.body.classList.remove("not-main");}else{document.body.classList.add("not-main");}
   if(n===9&&typeof scRender==='function')scRender();
   if(n===12&&typeof drawLeadDiagram==='function')drawLeadDiagram();
   if(n===13)rCFTab();
@@ -4638,7 +4634,6 @@ function sendContact(){
 </body>
 </html
 /* Hide sidebar on non-main tabs (narrow screen) */
-body.not-main .side{display:none!important}
 /* In print, side never shows */
 @media print{
   .side,#sumPanel,#empS{display:none!important}
