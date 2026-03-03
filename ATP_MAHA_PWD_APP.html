@@ -447,161 +447,6 @@ tr:hover td{background:#fdf8f3}
 @media(max-width:600px){.astats{grid-template-columns:repeat(2,1fr)}.adash{padding:.7rem}}
 
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* ===== IMAGE SLIDER STYLES ===== */
-#loginShell {
-  display: flex;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.login-left {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  position: relative;
-}
-
-.slider-container {
-  width: 100%;
-  max-width: 400px;
-  position: relative;
-}
-
-.slider-wrapper {
-  position: relative;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-  background: #fff;
-}
-
-.slides {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-}
-
-.slide {
-  min-width: 100%;
-  position: relative;
-}
-
-.slide img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.slide-caption {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-  color: white;
-  padding: 1.5rem 1rem 1rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-}
-
-.slider-dots {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 1.5rem;
-}
-
-.dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.4);
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.dot.active {
-  background: #fff;
-  width: 24px;
-  border-radius: 5px;
-}
-
-.slider-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(255,255,255,0.9);
-  border: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 1.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-.slider-arrow:hover {
-  background: #fff;
-  transform: translateY(-50%) scale(1.1);
-}
-
-.slider-arrow.prev {
-  left: 10px;
-}
-
-.slider-arrow.next {
-  right: 10px;
-}
-
-.login-right {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-}
-
-@media (max-width: 968px) {
-  #loginShell {
-    flex-direction: column;
-  }
-  
-  .login-left {
-    min-height: 40vh;
-  }
-  
-  .login-right {
-    min-height: 60vh;
-  }
-  
-  .slider-container {
-    max-width: 300px;
-  }
-}
-
-@media (max-width: 640px) {
-  .login-left {
-    padding: 1rem;
-  }
-  
-  .login-right {
-    padding: 1rem;
-  }
-  
-  .slider-arrow {
-    width: 32px;
-    height: 32px;
-    font-size: 1rem;
-  }
-}
-
 </style>
 
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -616,45 +461,6 @@ tr:hover td{background:#fdf8f3}
 </head>
 <body>
 <div id="loginShell">
-  <!-- Left Side - Image Slider -->
-  <div class="login-left">
-    <div class="slider-container">
-      <div class="slider-wrapper">
-        <button class="slider-arrow prev" onclick="moveSlide(-1)">&#10094;</button>
-        <button class="slider-arrow next" onclick="moveSlide(1)">&#10095;</button>
-        <div class="slides" id="slides">
-          <div class="slide">
-            <img src="Main.jpg" alt="Main Dashboard">
-            <div class="slide-caption">📊 Complete Estimate Dashboard</div>
-          </div>
-          <div class="slide">
-            <img src="lead_Chart.jpg" alt="Lead Chart">
-            <div class="slide-caption">📈 Lead Chart & Analysis</div>
-          </div>
-          <div class="slide">
-            <img src="Search.jpg" alt="Search Items">
-            <div class="slide-caption">🔍 Smart SSR Item Search</div>
-          </div>
-          <div class="slide">
-            <img src="Abstract.jpg" alt="Abstract">
-            <div class="slide-caption">📋 Abstract & Summary</div>
-          </div>
-          <div class="slide">
-            <img src="measurment.jpg" alt="Measurements">
-            <div class="slide-caption">📐 Measurement Sheet</div>
-          </div>
-          <div class="slide">
-            <img src="Consumption.jpg" alt="Consumption">
-            <div class="slide-caption">🧱 Material Consumption</div>
-          </div>
-        </div>
-      </div>
-      <div class="slider-dots" id="sliderDots"></div>
-    </div>
-  </div>
-
-  <!-- Right Side - Login Form -->
-  <div class="login-right">
 <div class="abox">
 <div class="alogo"><span class="ico">🏛️</span><h1>ATP's MAHA PWD ESTIMATE APP</h1><p>Maharashtra PWD · SSR 2022-23</p></div>
 <div class="acard">
@@ -698,8 +504,7 @@ tr:hover td{background:#fdf8f3}
 <button class="lbtn blue" id="admBtn" onclick="doAdminLogin()">🔑 Admin Login</button>
 </div>
 </div></div></div>
-</div>
-</div>
+
 <div id="payWall">
 <div class="pwcard">
 <div class="pwhd"><div style="font-size:1.8rem;margin-bottom:.3rem">📥</div><h2>Pay to Download</h2><p>Scan QR · Upload screenshot · Verify</p></div>
@@ -1127,7 +932,7 @@ ii) Water Absorption</td><td style="font-size:.57rem">One test for 50,000 blocks
   <div style="font-size:.78rem;font-weight:800;color:var(--tx);margin-bottom:.3rem">Aditya Thonge</div>
   <div style="display:flex;align-items:center;gap:.4rem;margin-bottom:.3rem">
     <span style="font-size:.82rem">&#128231;</span>
-    <a href="/cdn-cgi/l/email-protection#3044585f5e575551545944495170575d51595c1e535f5d" style="font-size:.72rem;color:#1a4a76;font-weight:700;text-decoration:none"><span class="__cf_email__" data-cfemail="1e6a767170797b7f7a776a677f5e79737f7772307d7173">[email&#160;protected]</span></a>
+    <a href="mailto:thongeaditya@gmail.com" style="font-size:.72rem;color:#1a4a76;font-weight:700;text-decoration:none">thongeaditya@gmail.com</a>
   </div>
   <div style="display:flex;align-items:center;gap:.4rem;margin-bottom:.3rem">
     <span style="font-size:.82rem">&#128241;</span>
@@ -1201,7 +1006,7 @@ iv><!-- /appShell -->
     </div>
   </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ── PWA: MANIFEST + SERVICE WORKER ──────────────────────────────── */
 (function(){
   /* SVG Icon — Maharashtra PWD colours */
@@ -5261,69 +5066,12 @@ function homeDelEst(nm){
   if(!confirm("Delete estimate \""+nm+"\"? This cannot be undone."))return;
   var d=(typeof getStore==="function")?getStore():{};
   delete d[nm];
-  if(typeof putStore==="functi
-<script>
-// Image Slider Functionality
-let currentSlide = 0;
-const totalSlides = 6;
-
-function initSlider() {
-  const dotsContainer = document.getElementById('sliderDots');
-  if (!dotsContainer) return;
-  
-  // Create dots
-  for (let i = 0; i < totalSlides; i++) {
-    const dot = document.createElement('div');
-    dot.className = 'dot' + (i === 0 ? ' active' : '');
-    dot.onclick = () => goToSlide(i);
-    dotsContainer.appendChild(dot);
-  }
-  
-  // Auto slide every 4 seconds
-  setInterval(() => {
-    moveSlide(1);
-  }, 4000);
+  if(typeof putStore==="function")putStore(d);
+  renderHomeScreen();
 }
-
-function moveSlide(direction) {
-  currentSlide += direction;
-  
-  if (currentSlide >= totalSlides) {
-    currentSlide = 0;
-  } else if (currentSlide < 0) {
-    currentSlide = totalSlides - 1;
-  }
-  
-  updateSlider();
-}
-
-function goToSlide(index) {
-  currentSlide = index;
-  updateSlider();
-}
-
-function updateSlider() {
-  const slidesContainer = document.getElementById('slides');
-  const dots = document.querySelectorAll('.dot');
-  
-  if (slidesContainer) {
-    slidesContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
-  }
-  
-  dots.forEach((dot, index) => {
-    if (index === currentSlide) {
-      dot.classList.add('active');
-    } else {
-      dot.classList.remove('active');
-    }
-  });
-}
-
-// Initialize slider when page loads
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initSlider);
-} else {
-  initSlider();
+function doLogout(){
+  if(!confirm("Are you sure you want to log out?"))return;
+  sessionStorage.removeItem("appReady");if(window.firebase&&firebase.auth)firebase.auth().signOut();
 }
 </script>
 </body>
