@@ -457,6 +457,60 @@ tr:hover td{background:#fdf8f3}
       var FBCFG={apiKey:"AIzaSyCdH-k3hH1mYYcND0cBf7J2pLRG6xQydrU",authDomain:"atp-maha-pwd.firebaseapp.com",projectId:"atp-maha-pwd",storageBucket:"atp-maha-pwd.firebasestorage.app",messagingSenderId:"382409286731",appId:"1:382409286731:web:37daae9842bc3687bf99ce"};
       if(!firebase.apps.length) firebase.initializeApp(FBCFG);
     } catch(e) { console.error('Firebase init error:', e); }
+
+function swAuth(i){for(var j=0;j<2;j++){var p=G("ap"+j),t=G("at"+j);if(p)p.classList[j===i?"add":"remove"]("on");if(t)t.classList[j===i?"add":"remove"]("on");}}
+function swEmail(tab){G("eL").style.display=tab==="l"?"block":"none";G("eR").style.display=tab==="r"?"block":"none";G("et0").classList[tab==="l"?"add":"remove"]("on");G("et1").classList[tab==="r"?"add":"remove"]("on");}
+function doGoogle(){
+  
+  firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(function(e){showToast("Google login failed: "+e.message,"error");});
+}
+function doForgot(){var em=(G("eEmail").value||"").trim();if(!em){showE("eErr","Enter email first");return;}firebase.auth().sendPasswordResetEmail(em).then(function(){showToast("Reset email sent 📧","success");}).catch(function(e){showE("eErr",e.message);});}
+function doLogout(){if(!confirm("Are you sure you want to log out?"))return;firebase.auth().signOut();}
+function doELogin(){
+  var em=(G("eEmail").value||"").trim(),pw=G("ePwd").value;
+  if(!em||!pw){showE("eErr","Email and password required");return;}
+  var btn=G("eLoginBtn");btn.disabled=true;btn.textContent="Logging in...";hideE("eErr");
+  firebase.auth().signInWithEmailAndPassword(em,pw)
+    .catch(function(e){btn.disabled=false;btn.textContent="🔑 Login";showE("eErr",e.code==="auth/user-not-found"||e.code==="auth/invalid-credential"?"Invalid email or password":e.code==="auth/wrong-password"?"Wrong password":e.message);});
+}
+function doRegister(){
+  var fn=(G("rFirst").value||"").trim(),ln=(G("rLast").value||"").trim();
+  var em=(G("rEmail").value||"").trim(),pw=G("rPwd").value,pw2=G("rPwd2").value;
+  if(!fn){showE("rErr","First name required");return;}if(!em){showE("rErr","Email required");return;}
+  if(pw.length<6){showE("rErr","Password min 6 chars");return;}if(pw!==pw2){showE("rErr","Passwords do not match");return;}
+  var name=(fn+" "+ln).trim();var btn=G("regBtn");btn.disabled=true;btn.textContent="Creating...";hideE("rErr");
+  firebase.auth().createUserWithEmailAndPassword(em,pw)
+    .then(function(c){return c.user.updateProfile({displayName:name});})
+    .then(function(){if(firebase.auth().currentUser)firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).set({name:name},{merge:true}).catch(function(){});showToast("Welcome "+fn+"!","success");})
+    .catch(function(e){btn.disabled=false;btn.textContent="📝 Create Account";showE("rErr",e.code==="auth/email-already-in-use"?"Email already registered":e.message);});
+}
+function doAdminLogin(){
+  var pw=(G("admPwd").value||"").trim();if(!pw){showE("admErr","Enter password");return;}
+  hideE("admErr");var btn=G("admBtn");btn.disabled=true;btn.textContent="Logging in...";
+  
+  firebase.auth().signInWithEmailAndPassword(ADMIN_EMAIL,pw)
+    .then(function(){
+      if(G("loginShell"))G("loginShell").style.display="none";
+      var w=G("adminWrap");if(w)w.style.display="block";
+      if(G("adminLoginBox"))G("adminLoginBox").style.display="none";
+      if(G("adminDash"))G("adminDash").style.display="block";
+      if(G("adminUsr"))G("adminUsr").textContent=ADMIN_EMAIL;
+      aLoadAll();aLoadCurQR();aStartPayListener();aLoadSettings();
+    })
+    .catch(function(e){btn.disabled=false;btn.textContent="🔑 Admin Login";showE("admErr",e.code==="auth/wrong-password"||e.code==="auth/invalid-credential"?"Wrong password":"Error: "+e.message);});
+}
+function doPortalLogin(){
+  var pw=(G("portalPwd").value||"").trim();if(!pw){showE("portalErr","Enter password");return;}
+  hideE("portalErr");var btn=G("portalBtn");btn.disabled=true;btn.textContent="Logging in...";
+  firebase.auth().signInWithEmailAndPassword(ADMIN_EMAIL,pw)
+    .then(function(c){
+      if(G("adminLoginBox"))G("adminLoginBox").style.display="none";
+      if(G("adminDash"))G("adminDash").style.display="block";
+      if(G("adminUsr"))G("adminUsr").textContent=c.user.email;
+      showToast("Welcome Admin! 👑","success");aLoadAll();aLoadCurQR();aStartPayListener();aLoadSettings();
+    })
+    .catch(function(e){btn.disabled=false;btn.textContent="🔑 Login to Dashboard";showE("portalErr",e.code==="auth/wrong-password"||e.code==="auth/invalid-credential"?"Wrong password":"Error: "+e.message);});
+}
   </script>
 </head>
 <body>
