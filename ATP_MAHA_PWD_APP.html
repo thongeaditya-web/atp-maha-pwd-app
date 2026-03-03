@@ -515,7 +515,7 @@ tr:hover td{background:#fdf8f3}
     if(!pw){if(admErr){admErr.textContent='Enter password';admErr.style.display='block';}return;}
     if(admErr)admErr.style.display='none';
     var btn=document.getElementById('admBtn');if(btn){btn.disabled=true;btn.textContent='Logging in...';}
-    var ADMIN_EMAIL='atpmahapwd@gmail.com';
+    var ADMIN_EMAIL=window.ADMIN_EMAIL||'thongeaditya@gmail.com';
     firebase.auth().signInWithEmailAndPassword(ADMIN_EMAIL,pw)
       .then(function(){
         var ls=document.getElementById('loginShell');if(ls)ls.style.display='none';
@@ -539,7 +539,7 @@ tr:hover td{background:#fdf8f3}
     if(!pw){if(pErr){pErr.textContent='Enter password';pErr.style.display='block';}return;}
     if(pErr)pErr.style.display='none';
     var btn=document.getElementById('portalBtn');if(btn){btn.disabled=true;btn.textContent='Logging in...';}
-    var ADMIN_EMAIL='atpmahapwd@gmail.com';
+    var ADMIN_EMAIL=window.ADMIN_EMAIL||'thongeaditya@gmail.com';
     firebase.auth().signInWithEmailAndPassword(ADMIN_EMAIL,pw)
       .then(function(c){
         var alb=document.getElementById('adminLoginBox');if(alb)alb.style.display='none';
@@ -3581,27 +3581,31 @@ function stopReqListener(){if(REQ_UNSUB){REQ_UNSUB();REQ_UNSUB=null;}}
 firebase.auth().onAuthStateChanged(function(user){
     if(user){
       CU=user;
-    startReqListener(user.uid);loadUserDoc();
-      if(G("loginShell"))G("loginShell").style.display="none";
-      /* sessionStorage persists across refresh but clears on tab close */
+      /* Hide login, show app FIRST before anything else */
+      if(G('loginShell'))G('loginShell').style.display='none';
+      if(G('appShell'))G('appShell').style.display='block';
+      try{startReqListener(user.uid);}catch(e){}
+      try{loadUserDoc();}catch(e){}
       var _prevSession=sessionStorage.getItem('_appOpen');
       sessionStorage.setItem('_appOpen','1');
-      if(!_prevSession){
-        /* Fresh login (no prior session) → show home screen */
-        renderHomeScreen();
-        if(G("homeScreen"))G("homeScreen").style.display="block";
-      } else {
-        /* Refresh → go straight to app at last tab */
-        if(G("appShell"))G("appShell").style.display="block";
-        setTimeout(function(){
-          var lt=sessionStorage.getItem('_lastTab');
-          if(typeof goTab==="function")goTab(lt?parseInt(lt):0);
-        },100);
-      }
-      setTimeout(function(){autoLoad();},300);
+      setTimeout(function(){
+        try{
+          if(!_prevSession){
+            if(typeof renderHomeScreen==='function')renderHomeScreen();
+          } else {
+            var lt=sessionStorage.getItem('_lastTab');
+            if(typeof goTab==='function')goTab(lt?parseInt(lt):0);
+          }
+        }catch(e){}
+        try{autoLoad();}catch(e){}
+      },300);
     }
-    else{CU=null;
-    stopReqListener();if(G("loginShell"))G("loginShell").style.display="flex";if(G("appShell"))G("appShell").style.display="none";}
+    else{
+      CU=null;
+      try{stopReqListener();}catch(e){}
+      if(G('loginShell'))G('loginShell').style.display='flex';
+      if(G('appShell'))G('appShell').style.display='none';
+    }
   });
 /* Hide loader fallback after 5s */
 setTimeout(function(){},5000);
