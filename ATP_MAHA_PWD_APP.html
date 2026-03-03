@@ -458,19 +458,117 @@ tr:hover td{background:#fdf8f3}
       if(!firebase.apps.length) firebase.initializeApp(FBCFG);
     } catch(e) { console.error('Firebase init error:', e); }
 
-  /* ── LOGIN FUNCTION STUBS (loaded early, delegate to real fns) ── */
-  window._doELogin=function doELogin(){
-    if(window._doELogin)return window._doELogin();
-    /* firebase not ready yet — wait */
-    document.getElementById('eLoginBtn').textContent='Loading...';
-    var t=setInterval(function(){if(window._doELogin){clearInterval(t);window._doELogin();}},100);
+  /* ── LOGIN FUNCTIONS (defined early so buttons work immediately) ── */
+  function doELogin(){
+    var em=(document.getElementById('eEmail').value||'').trim();
+    var pw=document.getElementById('ePwd').value;
+    if(!em||!pw){var e=document.getElementById('eErr');if(e){e.textContent='Email and password required';e.style.display='block';}return;}
+    var btn=document.getElementById('eLoginBtn');if(btn){btn.disabled=true;btn.textContent='Logging in...';}
+    var eErr=document.getElementById('eErr');if(eErr)eErr.style.display='none';
+    firebase.auth().signInWithEmailAndPassword(em,pw)
+      .catch(function(e){
+        if(btn){btn.disabled=false;btn.textContent='🔑 Login';}
+        var errEl=document.getElementById('eErr');
+        var msg=e.code==='auth/user-not-found'||e.code==='auth/invalid-credential'?'Invalid email or password':e.code==='auth/wrong-password'?'Wrong password':e.message;
+        if(errEl){errEl.textContent=msg;errEl.style.display='block';}
+      });
   }
-  window._doRegister=function doRegister(){if(window._doRegister)window._doRegister();}
-  window._doAdminLogin=function doAdminLogin(){if(window._doAdminLogin)window._doAdminLogin();}
-  window._doPortalLogin=function doPortalLogin(){if(window._doPortalLogin)window._doPortalLogin();}
-  window._doForgot=function doForgot(){if(window._doForgot)window._doForgot();}
-  window._doLogout=function doLogout(){if(window._doLogout)window._doLogout();}
-  function doGoogle(){if(window._doGoogle)window._doGoogle();}
+  function doRegister(){
+    var fn=(document.getElementById('rFirst').value||'').trim();
+    var ln=(document.getElementById('rLast').value||'').trim();
+    var em=(document.getElementById('rEmail').value||'').trim();
+    var pw=document.getElementById('rPwd').value;
+    var pw2=document.getElementById('rPwd2').value;
+    var rErr=document.getElementById('rErr');
+    function showRErr(m){if(rErr){rErr.textContent=m;rErr.style.display='block';}}
+    if(!fn){showRErr('First name required');return;}
+    if(!em){showRErr('Email required');return;}
+    if(pw.length<6){showRErr('Password min 6 chars');return;}
+    if(pw!==pw2){showRErr('Passwords do not match');return;}
+    var name=(fn+' '+ln).trim();
+    var btn=document.getElementById('regBtn');if(btn){btn.disabled=true;btn.textContent='Creating...';}
+    if(rErr)rErr.style.display='none';
+    firebase.auth().createUserWithEmailAndPassword(em,pw)
+      .then(function(c){return c.user.updateProfile({displayName:name});})
+      .then(function(){
+        var u=firebase.auth().currentUser;
+        if(u)firebase.firestore().collection('users').doc(u.uid).set({name:name},{merge:true}).catch(function(){});
+        if(typeof showToast==='function')showToast('Welcome '+fn+'!','success');
+      })
+      .catch(function(e){
+        if(btn){btn.disabled=false;btn.textContent='📝 Create Account';}
+        showRErr(e.code==='auth/email-already-in-use'?'Email already registered':e.message);
+      });
+  }
+  function doAdminLogin(){
+    var pw=(document.getElementById('admPwd').value||'').trim();
+    var admErr=document.getElementById('admErr');
+    if(!pw){if(admErr){admErr.textContent='Enter password';admErr.style.display='block';}return;}
+    if(admErr)admErr.style.display='none';
+    var btn=document.getElementById('admBtn');if(btn){btn.disabled=true;btn.textContent='Logging in...';}
+    var ADMIN_EMAIL='atpmahapwd@gmail.com';
+    firebase.auth().signInWithEmailAndPassword(ADMIN_EMAIL,pw)
+      .then(function(){
+        var ls=document.getElementById('loginShell');if(ls)ls.style.display='none';
+        var w=document.getElementById('adminWrap');if(w)w.style.display='block';
+        var alb=document.getElementById('adminLoginBox');if(alb)alb.style.display='none';
+        var ad=document.getElementById('adminDash');if(ad)ad.style.display='block';
+        var au=document.getElementById('adminUsr');if(au)au.textContent=ADMIN_EMAIL;
+        if(typeof aLoadAll==='function')aLoadAll();
+        if(typeof aLoadCurQR==='function')aLoadCurQR();
+        if(typeof aStartPayListener==='function')aStartPayListener();
+        if(typeof aLoadSettings==='function')aLoadSettings();
+      })
+      .catch(function(e){
+        if(btn){btn.disabled=false;btn.textContent='🔑 Admin Login';}
+        if(admErr){admErr.textContent=e.code==='auth/wrong-password'||e.code==='auth/invalid-credential'?'Wrong password':'Error: '+e.message;admErr.style.display='block';}
+      });
+  }
+  function doPortalLogin(){
+    var pw=(document.getElementById('portalPwd').value||'').trim();
+    var pErr=document.getElementById('portalErr');
+    if(!pw){if(pErr){pErr.textContent='Enter password';pErr.style.display='block';}return;}
+    if(pErr)pErr.style.display='none';
+    var btn=document.getElementById('portalBtn');if(btn){btn.disabled=true;btn.textContent='Logging in...';}
+    var ADMIN_EMAIL='atpmahapwd@gmail.com';
+    firebase.auth().signInWithEmailAndPassword(ADMIN_EMAIL,pw)
+      .then(function(c){
+        var alb=document.getElementById('adminLoginBox');if(alb)alb.style.display='none';
+        var ad=document.getElementById('adminDash');if(ad)ad.style.display='block';
+        var au=document.getElementById('adminUsr');if(au)au.textContent=c.user.email;
+        if(typeof showToast==='function')showToast('Welcome Admin! 👑','success');
+        if(typeof aLoadAll==='function')aLoadAll();
+        if(typeof aLoadCurQR==='function')aLoadCurQR();
+        if(typeof aStartPayListener==='function')aStartPayListener();
+        if(typeof aLoadSettings==='function')aLoadSettings();
+      })
+      .catch(function(e){
+        if(btn){btn.disabled=false;btn.textContent='🔑 Login to Dashboard';}
+        if(pErr){pErr.textContent=e.code==='auth/wrong-password'||e.code==='auth/invalid-credential'?'Wrong password':'Error: '+e.message;pErr.style.display='block';}
+      });
+  }
+  function doForgot(){
+    var em=(document.getElementById('eEmail').value||'').trim();
+    var eErr=document.getElementById('eErr');
+    if(!em){if(eErr){eErr.textContent='Enter email first';eErr.style.display='block';}return;}
+    firebase.auth().sendPasswordResetEmail(em)
+      .then(function(){if(typeof showToast==='function')showToast('Reset email sent 📧','success');})
+      .catch(function(e){if(eErr){eErr.textContent=e.message;eErr.style.display='block';}});
+  }
+  function doLogout(){if(!confirm('Are you sure you want to log out?'))return;firebase.auth().signOut();}
+  function doGoogle(){firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(function(e){if(typeof showToast==='function')showToast('Google login failed: '+e.message,'error');});}
+  function swAuth(n){
+    var panels=['ap0','ap1'];
+    panels.forEach(function(id,i){var el=document.getElementById(id);if(el)el.classList[i===n?'add':'remove']('on');});
+    var tabs=document.querySelectorAll('.atab');
+    tabs.forEach(function(t,i){t.classList[i===n?'add':'remove']('on');});
+  }
+  function swEmail(t){
+    var eL=document.getElementById('eL');var eR=document.getElementById('eR');
+    var et0=document.getElementById('et0');var et1=document.getElementById('et1');
+    if(t==='l'){if(eL)eL.style.display='block';if(eR)eR.style.display='none';if(et0)et0.classList.add('on');if(et1)et1.classList.remove('on');}
+    else{if(eL)eL.style.display='none';if(eR)eR.style.display='block';if(et0)et0.classList.remove('on');if(et1)et1.classList.add('on');}
+  }
   
   
   function showE(id,msg){var e=document.getElementById(id);if(e){e.textContent=msg;e.style.display='block';}}
