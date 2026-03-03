@@ -928,7 +928,7 @@ ii) Water Absorption</td><td style="font-size:.57rem">One test for 50,000 blocks
   <div style="font-size:.78rem;font-weight:800;color:var(--tx);margin-bottom:.3rem">Aditya Thonge</div>
   <div style="display:flex;align-items:center;gap:.4rem;margin-bottom:.3rem">
     <span style="font-size:.82rem">&#128231;</span>
-    <a href="/cdn-cgi/l/email-protection#681c0007060f0d090c011c1109280f05090104460b0705" style="font-size:.72rem;color:#1a4a76;font-weight:700;text-decoration:none"><span class="__cf_email__" data-cfemail="5024383f3e373531343924293110373d31393c7e333f3d">[email&#160;protected]</span></a>
+    <a href="/cdn-cgi/l/email-protection#33475b5c5d545652575a474a5273545e525a5f1d505c5e" style="font-size:.72rem;color:#1a4a76;font-weight:700;text-decoration:none"><span class="__cf_email__" data-cfemail="e5918d8a8b828084818c919c84a58288848c89cb868a88">[email&#160;protected]</span></a>
   </div>
   <div style="display:flex;align-items:center;gap:.4rem;margin-bottom:.3rem">
     <span style="font-size:.82rem">&#128241;</span>
@@ -2079,7 +2079,7 @@ function rBOQ(){
     var hasFloor=it.rows&&it.rows.some(function(rw){return rw.fl&&rw.fl>0;});
 
     if(!hasFloor){
-      /* Simple single row */
+      /* Simple single row - no floor split */
       h+='<tr>'
         +'<td>'+(i+1)+'</td>'
         +'<td class="or">'+it.no+'</td>'
@@ -2093,8 +2093,7 @@ function rBOQ(){
         +'<button class="dbt" onclick="removeItem('+it.id+')">del</button>'
         +'</td></tr>';
     } else {
-      /* Floor-wise split rows */
-      /* Collect qty per floor */
+      /* Floor-wise split: collect qty per floor */
       var flQty={};
       if(it.rows){
         it.rows.forEach(function(rw){
@@ -2104,20 +2103,19 @@ function rBOQ(){
         });
       }
       var usedFloors=Object.keys(flQty).map(Number).sort();
-      var totalQty=0,totalAmt=0;
-      var floorRowCount=usedFloors.length;
-      /* +1 for total row, +0 for header (merged) */
-      var totalRows=floorRowCount+1; /* floor rows + total row */
+      var totalRows=usedFloors.length+1; /* floor rows + 1 total row */
 
       var firstFloor=true;
+      var grandQty=0,grandAmt=0;
+
       for(var fi=0;fi<usedFloors.length;fi++){
         var fl=usedFloors[fi];
         var fq=Math.round((flQty[fl]||0)*1000)/1000;
         var fRate=Math.round(it.finalRate*(1+(fl>0?fl:0)/100)*100)/100;
         var fAmt=Math.round(fRate*fq*100)/100;
-        totalQty+=fq;totalAmt+=fAmt;
+        grandQty+=fq; grandAmt+=fAmt;
 
-        h+='<tr'+(fl===0?' style="background:#f9fbe7"':' style="background:#fff8e1"')+'>';
+        h+='<tr>';
         if(firstFloor){
           h+='<td rowspan="'+totalRows+'">'+(i+1)+'</td>'
             +'<td class="or" rowspan="'+totalRows+'">'+it.no+'</td>'
@@ -2126,10 +2124,9 @@ function rBOQ(){
           firstFloor=false;
         }
         h+='<td class="r">'+fq.toFixed(3)
-          +'<br><span style="font-size:.46rem;background:'+(fl===0?'#558b2f':'#e65100')+';color:#fff;border-radius:2px;padding:0 .2rem">'
-          +floorNames[fl]+'</span></td>'
-          +'<td class="r" style="font-size:.6rem">\u20b9'+fmt(fRate)
-          +(fl>0?'<br><span style="font-size:.44rem;color:#e65100">+'+fl+'% on GF</span>':'')+'</td>'
+          +'<br><span style="font-size:.46rem;font-weight:700;color:var(--or)">'+floorNames[fl]+'</span></td>'
+          +'<td class="r">\u20b9'+fmt(fRate)
+          +(fl>0?'<br><span style="font-size:.44rem;color:var(--mu)">+'+fl+'% on GF</span>':'')+'</td>'
           +'<td class="r gr">\u20b9'+fmt(fAmt)+'</td>'
           +(fi===0?'<td class="noprt" rowspan="'+totalRows+'" style="white-space:nowrap;vertical-align:top;padding-top:.4rem">'
             +'<button onclick="openCFEditor('+i+')" class="btn-sm" style="background:#ff6f00;color:#fff;font-size:.52rem;padding:.12rem .3rem;margin-right:.2rem;border:none;border-radius:3px;cursor:pointer">CF</button>'
@@ -2137,14 +2134,14 @@ function rBOQ(){
             +'</td>':'')
           +'</tr>';
       }
-      /* Total row */
-      totalQty=Math.round(totalQty*1000)/1000;
-      totalAmt=Math.round(totalAmt*100)/100;
-      h+='<tr style="background:#e8f5e9;font-weight:700">'
-        +'<td class="r" style="font-size:.6rem;font-weight:900">'+totalQty.toFixed(3)
-        +'<br><span style="font-size:.46rem;background:#2e7d32;color:#fff;border-radius:2px;padding:0 .2rem">Total</span></td>'
+      /* Total row - no background color */
+      grandQty=Math.round(grandQty*1000)/1000;
+      grandAmt=Math.round(grandAmt*100)/100;
+      h+='<tr style="font-weight:700;border-top:1px solid var(--bd2)">'
+        +'<td class="r">'+grandQty.toFixed(3)
+        +'<br><span style="font-size:.46rem;font-weight:700;color:var(--gr)">Total</span></td>'
         +'<td class="r" style="font-size:.56rem;color:var(--mu)">—</td>'
-        +'<td class="r gr" style="font-size:.7rem">\u20b9'+fmt(totalAmt)+'</td>'
+        +'<td class="r gr">\u20b9'+fmt(grandAmt)+'</td>'
         +'</tr>';
     }
   }
