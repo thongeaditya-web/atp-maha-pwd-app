@@ -729,7 +729,7 @@ service cloud.firestore {<br>
   </div>
 </div>
 <div id="appShell" style="display:none">
-<nav><div class="nb"><h1>Maha PWD Estimator</h1><p>Maharashtra PWD · SSR 2022-23 · 2009 items · LL lookup</p></div><div class="ns"><div class="nst"><div class="nv" id="hIt">6</div><div class="nl">Items</div></div><div class="nst"><div class="nv" id="hTot">₹2.94 L</div><div class="nl">Grand Total</div></div></div><div id="userHeaderDiv" style="display:flex;align-items:center;gap:.4rem;font-size:.62rem"></div><button id="installBtn" onclick="window.__pwaInstall&amp;&amp;window.__pwaInstall()" style="display:none;align-items:center;gap:.28rem;background:#f5a623;color:#18150f;border:none;border-radius:4px;padding:.28rem .56rem;font-size:.58rem;font-weight:800;cursor:pointer;white-space:nowrap;font-family:inherit">↓ Install App</button></nav>
+<nav><div class="nb"><h1>Maha PWD Estimator</h1><p>Maharashtra PWD · SSR 2022-23 · 2009 items · LL lookup</p></div><div class="ns"><div class="nst"><div class="nv" id="hIt">6</div><div class="nl">Items</div></div><div class="nst"><div class="nv" id="hTot">₹2.94 L</div><div class="nl">Grand Total</div></div></div><div id="userHeaderDiv" style="display:flex;align-items:center;gap:.4rem;font-size:.62rem"></div><button onclick="doLogout()" id="logoutBtn" style="display:none;background:#c62828;color:#fff;border:none;border-radius:6px;padding:.3rem .7rem;font-size:.62rem;font-weight:700;cursor:pointer">⏻ Logout</button><button id="installBtn" onclick="window.__pwaInstall&amp;&amp;window.__pwaInstall()" style="display:none;align-items:center;gap:.28rem;background:#f5a623;color:#18150f;border:none;border-radius:4px;padding:.28rem .56rem;font-size:.58rem;font-weight:800;cursor:pointer;white-space:nowrap;font-family:inherit">↓ Install App</button></nav>
 <div class="tabs"><div class="tab on" id="t0" onclick="goTab(0)">Main</div><div class="tab" id="t1" onclick="goTab(1)">Lead Chart</div><div class="tab" id="t2" onclick="goTab(2)">Search <span class="tbdg" id="b2">0</span></div><div class="tab" id="t3" onclick="goTab(3)">Abstract</div><div class="tab" id="t4" onclick="goTab(4)">Rate Analysis</div><div class="tab" id="t5" onclick="goTab(5)">Measurements</div><div class="tab" id="t6" onclick="goTab(6)">Consumption</div><div class="tab" id="t7" onclick="goTab(7)">Royalty</div><div class="tab" id="t8" onclick="goTab(8)">General Abstract</div><div class="tab" id="t9" onclick="goTab(9)">Steel Calc</div><div class="tab" id="t10" onclick="goTab(10)">&#9881;&#65039; Settings</div><div class="tab" id="t11" onclick="goTab(11)">&#129514; Testing</div><div class="tab" id="t12" onclick="goTab(12)">&#128205; Lead Map</div><div class="tab" id="t13" onclick="goTab(13)">&#9881;&#65039; CF Table</div></div>
 <div class="lay">
 <div class="main">
@@ -2088,43 +2088,46 @@ function rBOQ(){
     var grpTotal=grp.reduce(function(s,x){return s+x.amount;},0);
     var grpQty=grp.reduce(function(s,x){return s+x.qty;},0);
     srNo++;
+    var rowspan=grp.length;
 
-    // Header row - item no, desc, unit span all floors
-    h+='<tr style="background:#f3f7ff">'
-      +'<td style="font-weight:700">'+srNo+'</td>'
-      +'<td class="or" style="font-weight:700">'+first.no+'</td>'
-      +'<td style="max-width:210px;font-size:.63rem;line-height:1.27">'+desc+'</td>'
-      +'<td style="font-size:.58rem;color:var(--mu)">'+first.unit+'</td>'
-      +'<td colspan="3"></td>'
-      +'<td class="noprt"></td></tr>';
-
-    // One row per floor
     for(var f=0;f<grp.length;f++){
       var fit=grp[f];
       var fcls=FCLS[fit.floor]||'fl-gf';
       var flbl=FLBL[fit.floor]||fit.floor;
       var pctNote=fit.floorPct>0?' +'+fit.floorPct+'%':'';
-      h+='<tr>'
-        +'<td></td><td></td>'
-        +'<td style="padding-left:1rem;font-size:.62rem">'
-        +'<span class="fl-badge '+fcls+'">'+flbl+'</span></td>'
-        +'<td></td>'
+      h+='<tr>';
+
+      // SR, Item No, Desc, Unit — only on first row, rowspan all floors
+      if(f===0){
+        h+='<td rowspan="'+rowspan+'" style="vertical-align:middle;font-weight:700">'+srNo+'</td>'
+          +'<td rowspan="'+rowspan+'" class="or" style="vertical-align:middle;font-weight:700">'+first.no+'</td>'
+          +'<td rowspan="'+rowspan+'" style="max-width:210px;font-size:.63rem;line-height:1.27;vertical-align:middle">'+desc+'</td>'
+          +'<td rowspan="'+rowspan+'" style="font-size:.58rem;color:var(--mu);vertical-align:middle">'+first.unit+'</td>';
+      }
+
+      // Floor badge, Qty, Rate, Amount, Del
+      h+='<td><span class="fl-badge '+fcls+'">'+flbl+'</span></td>'
         +'<td class="r">'+fit.qty.toFixed(3)+'</td>'
         +'<td class="r">₹'+fmt(fit.finalRate)
         +'<span style="font-size:.52rem;color:var(--mu)">'+pctNote+'</span></td>'
         +'<td class="r gr">₹'+fmt(fit.amount)+'</td>'
-        +'<td class="noprt" style="white-space:nowrap">'
-        +'<button class="dbt" onclick="removeItem('+fit.id+')">del</button>'
+        +'<td class="noprt" style="white-space:nowrap">';
+
+      // CF button + del only on first floor row
+      if(f===0){
+        h+='<button onclick="openCFEditor('+items.indexOf(fit)+')" class="btn-sm" style="background:#ff6f00;color:#fff;font-size:.52rem;padding:.12rem .3rem;margin-right:.2rem;border:none;border-radius:3px;cursor:pointer">CF</button>';
+      }
+      h+='<button class="dbt" onclick="removeItem('+fit.id+')">del</button>'
         +'</td></tr>';
     }
 
-    // Sub-total row for this item
-    h+='<tr style="background:#e8f5e9">'
-      +'<td colspan="3" style="text-align:right;font-size:.63rem;font-weight:700;color:#1b5e20">Total</td>'
+    // Total row — merged SR+No+Desc+Unit columns, then qty+amount
+    h+='<tr style="background:#e8f5e9;font-weight:700">'
+      +'<td colspan="4" style="text-align:right;font-size:.63rem;color:#1b5e20">Total</td>'
       +'<td></td>'
-      +'<td class="r" style="font-weight:700">'+grpQty.toFixed(3)+'</td>'
+      +'<td class="r">'+grpQty.toFixed(3)+'</td>'
       +'<td></td>'
-      +'<td class="r gr" style="font-weight:700">₹'+fmt(grpTotal)+'</td>'
+      +'<td class="r gr">₹'+fmt(grpTotal)+'</td>'
       +'<td></td></tr>';
   }
 
@@ -3461,7 +3464,7 @@ firebase.auth().onAuthStateChanged(function(user){
     if(user){
       CU=user;
       if(G('loginShell'))G('loginShell').style.display='none';
-      if(G('appShell'))G('appShell').style.display='block';
+      if(G('appShell'))G('appShell').style.display='block';if(G('logoutBtn'))G('logoutBtn').style.display='inline-block';
       try{startReqListener(user.uid);}catch(e){}
       try{loadUserDoc();}catch(e){}
       var _prevSession=sessionStorage.getItem('_appOpen');
@@ -3475,7 +3478,7 @@ firebase.auth().onAuthStateChanged(function(user){
       CU=null;
       try{stopReqListener();}catch(e){}
       if(G('loginShell'))G('loginShell').style.display='flex';
-      if(G('appShell'))G('appShell').style.display='none';
+      if(G('appShell'))G('appShell').style.display='none';if(G('logoutBtn'))G('logoutBtn').style.display='none';
     }
   });
 /* Hide loader fallback after 5s */
