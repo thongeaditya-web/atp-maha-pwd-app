@@ -995,7 +995,7 @@ iv><!-- /appShell -->
     </div>
   </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<!-- Cloudflare email-decode script removed (404 error) -->
 /* ── PWA: MANIFEST + SERVICE WORKER ──────────────────────────────── */
 (function(){
   /* SVG Icon — Maharashtra PWD colours */
@@ -3516,13 +3516,7 @@ function doGoogle(){
   firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(function(e){showToast("Google login failed: "+e.message,"error");});
 }
 
-function doELogin(){
-  var em=(G("eEmail").value||"").trim(),pw=G("ePwd").value;
-  if(!em||!pw){showE("eErr","Email and password required");return;}
-  var btn=G("eLoginBtn");btn.disabled=true;btn.textContent="Logging in...";hideE("eErr");
-  firebase.auth().signInWithEmailAndPassword(em,pw)
-    .catch(function(e){btn.disabled=false;btn.textContent="🔑 Login";showE("eErr",e.code==="auth/user-not-found"||e.code==="auth/invalid-credential"?"Invalid email or password":e.code==="auth/wrong-password"?"Wrong password":e.message);});
-}
+/* duplicate doELogin removed */
 
 function doRegister(){
   var fn=(G("rFirst").value||"").trim(),ln=(G("rLast").value||"").trim();
@@ -3539,34 +3533,8 @@ function doRegister(){
 function doForgot(){var em=(G("eEmail").value||"").trim();if(!em){showE("eErr","Enter email first");return;}firebase.auth().sendPasswordResetEmail(em).then(function(){showToast("Reset email sent 📧","success");}).catch(function(e){showE("eErr",e.message);});}
 function doLogout(){if(!confirm("Are you sure you want to log out?"))return;firebase.auth().signOut();}
 
-function doAdminLogin(){
-  var pw=(G("admPwd").value||"").trim();if(!pw){showE("admErr","Enter password");return;}
-  hideE("admErr");var btn=G("admBtn");btn.disabled=true;btn.textContent="Logging in...";
-  
-  firebase.auth().signInWithEmailAndPassword(ADMIN_EMAIL,pw)
-    .then(function(){
-      if(G("loginShell"))G("loginShell").style.display="none";
-      var w=G("adminWrap");if(w)w.style.display="block";
-      if(G("adminLoginBox"))G("adminLoginBox").style.display="none";
-      if(G("adminDash"))G("adminDash").style.display="block";
-      if(G("adminUsr"))G("adminUsr").textContent=ADMIN_EMAIL;
-      aLoadAll();aLoadCurQR();aStartPayListener();aLoadSettings();
-    })
-    .catch(function(e){btn.disabled=false;btn.textContent="🔑 Admin Login";showE("admErr",e.code==="auth/wrong-password"||e.code==="auth/invalid-credential"?"Wrong password":"Error: "+e.message);});
-}
-
-function doPortalLogin(){
-  var pw=(G("portalPwd").value||"").trim();if(!pw){showE("portalErr","Enter password");return;}
-  hideE("portalErr");var btn=G("portalBtn");btn.disabled=true;btn.textContent="Logging in...";
-  firebase.auth().signInWithEmailAndPassword(ADMIN_EMAIL,pw)
-    .then(function(c){
-      if(G("adminLoginBox"))G("adminLoginBox").style.display="none";
-      if(G("adminDash"))G("adminDash").style.display="block";
-      if(G("adminUsr"))G("adminUsr").textContent=c.user.email;
-      showToast("Welcome Admin! 👑","success");aLoadAll();aLoadCurQR();aStartPayListener();aLoadSettings();
-    })
-    .catch(function(e){btn.disabled=false;btn.textContent="🔑 Login to Dashboard";showE("portalErr",e.code==="auth/wrong-password"||e.code==="auth/invalid-credential"?"Wrong password":"Error: "+e.message);});
-}
+/* duplicate doAdminLogin removed */
+/* duplicate doPortalLogin removed */
 
 function openAdmin(){
   var w=G("adminWrap");if(!w)return;w.style.display="block";
@@ -4177,15 +4145,7 @@ document.addEventListener("DOMContentLoaded",function(){
     showToast("Firebase not available — check internet","error");
     return;
   }
-  firebase.auth().onAuthStateChanged(function(user){
-    if(user){
-      CU=user;loadUserDoc();
-      if(G("loginShell"))G("loginShell").style.display="none";
-      if(G("appShell"))G("appShell").style.display="block";
-      setTimeout(function(){autoLoad();},300);
-    }
-    else{CU=null;if(G("loginShell"))G("loginShell").style.display="flex";if(G("appShell"))G("appShell").style.display="none";}
-  });
+/* duplicate onAuthStateChanged removed */
   loadAppCfg();loadAdminQR();
   loadQR(makeQR);
 });
@@ -4305,13 +4265,7 @@ function doGoogle(){
   firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(function(e){showToast("Google login failed: "+e.message,"error");});
 }
 
-function doELogin(){
-  var em=(G("eEmail").value||"").trim(),pw=G("ePwd").value;
-  if(!em||!pw){showE("eErr","Email and password required");return;}
-  var btn=G("eLoginBtn");btn.disabled=true;btn.textContent="Logging in...";hideE("eErr");
-  firebase.auth().signInWithEmailAndPassword(em,pw)
-    .catch(function(e){btn.disabled=false;btn.textContent="🔑 Login";showE("eErr",e.code==="auth/user-not-found"||e.code==="auth/invalid-credential"?"Invalid email or password":e.code==="auth/wrong-password"?"Wrong password":e.message);});
-}
+/* duplicate doELogin removed */
 
 function doRegister(){
   var fn=(G("rFirst").value||"").trim(),ln=(G("rLast").value||"").trim();
@@ -4328,34 +4282,9 @@ function doRegister(){
 function doForgot(){var em=(G("eEmail").value||"").trim();if(!em){showE("eErr","Enter email first");return;}firebase.auth().sendPasswordResetEmail(em).then(function(){showToast("Reset email sent 📧","success");}).catch(function(e){showE("eErr",e.message);});}
 function doLogout(){if(!confirm("Log out?"))return;firebase.auth().signOut();}
 
-function doAdminLogin(){
-  var pw=(G("admPwd").value||"").trim();if(!pw){showE("admErr","Enter password");return;}
-  hideE("admErr");var btn=G("admBtn");btn.disabled=true;btn.textContent="Logging in...";
-  
-  firebase.auth().signInWithEmailAndPassword(ADMIN_EMAIL,pw)
-    .then(function(){
-      if(G("loginShell"))G("loginShell").style.display="none";
-      var w=G("adminWrap");if(w)w.style.display="block";
-      if(G("adminLoginBox"))G("adminLoginBox").style.display="none";
-      if(G("adminDash"))G("adminDash").style.display="block";
-      if(G("adminUsr"))G("adminUsr").textContent=ADMIN_EMAIL;
-      aLoadAll();aLoadCurQR();aStartPayListener();aLoadSettings();
-    })
-    .catch(function(e){btn.disabled=false;btn.textContent="🔑 Admin Login";showE("admErr",e.code==="auth/wrong-password"||e.code==="auth/invalid-credential"?"Wrong password":"Error: "+e.message);});
-}
+/* duplicate doAdminLogin removed */
 
-function doPortalLogin(){
-  var pw=(G("portalPwd").value||"").trim();if(!pw){showE("portalErr","Enter password");return;}
-  hideE("portalErr");var btn=G("portalBtn");btn.disabled=true;btn.textContent="Logging in...";
-  firebase.auth().signInWithEmailAndPassword(ADMIN_EMAIL,pw)
-    .then(function(c){
-      if(G("adminLoginBox"))G("adminLoginBox").style.display="none";
-      if(G("adminDash"))G("adminDash").style.display="block";
-      if(G("adminUsr"))G("adminUsr").textContent=c.user.email;
-      showToast("Welcome Admin! 👑","success");aLoadAll();aLoadCurQR();aStartPayListener();aLoadSettings();
-    })
-    .catch(function(e){btn.disabled=false;btn.textContent="🔑 Login to Dashboard";showE("portalErr",e.code==="auth/wrong-password"||e.code==="auth/invalid-credential"?"Wrong password":"Error: "+e.message);});
-}
+/* duplicate doPortalLogin removed */
 
 function openAdmin(){
   var w=G("adminWrap");if(!w)return;w.style.display="block";
